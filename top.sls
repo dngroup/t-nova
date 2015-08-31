@@ -1,0 +1,3 @@
+base:
+  '*':
+    - storage/proxy/ssh
