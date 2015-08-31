@@ -1,3 +1,18 @@
+gitusername:
+  git.config:
+    - name: user.name
+    - value: Nicolas Herbaut
+    - user: root
+    - is_global: True
+
+gituseremail:
+  git.config:
+    - name: user.email
+    - value: nherbaut@labri.fr
+    - user: root
+    - is_global: True
+
+
 ubuntu-cloud-keyring:
   pkg.installed
 

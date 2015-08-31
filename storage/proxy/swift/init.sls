@@ -4,6 +4,7 @@
     - group: root
     - mode: 644
     - source: salt://storage/proxy/swift/proxy-server.conf
+    - makedirs: True
 
 /etc/swift/swift.conf:
   file.managed:
@@ -11,3 +12,4 @@
     - group: root
     - mode: 644
     - source: salt://storage/proxy/swift/swift.conf
+    - makedirs: True
