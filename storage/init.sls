@@ -1,6 +1,3 @@
-mine_functions:
-  test.ping: []
-
 ubuntu-cloud-keyring:
   pkg.installed
 

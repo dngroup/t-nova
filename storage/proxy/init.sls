@@ -6,9 +6,10 @@ mypkgs:
       - swift-proxy
       - python-swiftclient 
       - memcached
+    
 
 include:
   - .memcached
   - .ssh
   - .swift
-  - .swift/ring
+#  - .swift/ring

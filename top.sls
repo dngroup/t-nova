@@ -2,13 +2,15 @@ base:
   '*':
     - storage
     
-  'proxy*':
+  'roles:swift_proxy':
+    - match: grain
     - require:
       -  sls: storage
     - storage/proxy
     
-  'object*':
+  'roles:swift_object':
+    - match: grain
     - require:
       -  sls: storage
-    - storage/nodes/ssh
+    - storage/nodes
 
