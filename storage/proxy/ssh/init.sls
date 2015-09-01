@@ -8,7 +8,7 @@ openssh-client:
     - mode: 644
     - source: salt://storage/proxy/ssh/sshd_config
 
-thatch:
+ssh keys installed:
   ssh_auth.present:
     - user: root
     - source: salt://storage/ssh_keys/swift.pub
