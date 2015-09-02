@@ -17,8 +17,7 @@ swift-ring-builder account.builder rebalance
 swift-ring-builder container.builder rebalance
 swift-ring-builder object.builder rebalance
 
-chown -R swift:swift /etc/swift
-service swift-proxy restart
+
 
 
 

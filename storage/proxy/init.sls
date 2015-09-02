@@ -4,6 +4,8 @@ mypkgs:
     - pkgs:
       - swift 
       - python-swiftclient 
+      - swift-proxy
+
       
     
 
