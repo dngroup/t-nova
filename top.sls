@@ -11,6 +11,8 @@ base:
   'roles:swift_object':
     - match: grain
     - require:
-      -  sls: storage
+      - sls: storage
+    - watch:
+      - sls: storage/nodes
     - storage/nodes
 

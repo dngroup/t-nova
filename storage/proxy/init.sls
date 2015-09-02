@@ -10,7 +10,7 @@ mypkgs:
     
 
 include:
-  - .memcached
   - .ssh
   - .swift
+  - .memcached
 

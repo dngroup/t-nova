@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 swift-ring-builder account.builder create 18 3 1
 swift-ring-builder container.builder create 18 3 1

@@ -57,6 +57,7 @@ swift-proxy:
     - name: /var/swift/build-ring.sh
     - cwd: /etc/swift
     - require:
+      - file: /var/swift/build-ring.sh
       - file: /etc/swift/proxy-server.conf
       - file: /etc/swift/swift.conf
       - file: /etc/swift
@@ -80,6 +81,6 @@ salt-call cp.push /etc/swift/account.ring.gz:
         - cmd: /var/swift/build-ring.sh
     
    
-    
 
+  
 

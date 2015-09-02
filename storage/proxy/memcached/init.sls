@@ -10,3 +10,8 @@ memcached:
     - user: root
     - group: root
     - mode: 700
+  service.running: 
+    - require:
+      - pkg: memcached
+    - watch:
+      - file: memcached
