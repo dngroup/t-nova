@@ -7,8 +7,8 @@
     - user: root
     - group: root
     - mode: 700
-    
-
+  pkg.installed:
+    - name: swift-proxy
 
 /etc/swift/swift.conf:
   file:
@@ -22,4 +22,8 @@
   cmd:
     - run
     - name: 'salt-call cp.push "/etc/swift/swift.conf"'
+  pkg.installed:
+    - name: swift-proxy
     
+include:
+  - .ring

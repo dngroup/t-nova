@@ -1,7 +1,12 @@
-/etc/memcached.conf:
-  file.managed:
+memcached:
+  pkg: 
+    - installed
+  file:
+    - managed
+    - source: salt://storage/proxy/memcached/memcached.conf
+    - name: /etc/memcached.conf
+    - template: jinja
+    - makedirs: True
     - user: root
     - group: root
-    - mode: 644
-    - source: salt://storage/proxy/memcached/memcached.conf
-
+    - mode: 700
