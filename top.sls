@@ -1,18 +1,25 @@
 base:
-  '*':
-    - storage
+#  '*':
+#   - hostsfile
     
-  'roles:swift_proxy':
-    - match: grain
-    - require:
-      -  sls: storage
-    - storage/proxy
     
-  'roles:swift_object':
+#  'roles:swift_proxy':
+#    - match: grain
+#    - require:
+#      -  sls: storage
+#    - storage
+#    - storage/proxy
+#    
+#  'roles:swift_object':
+#    - match: grain
+#    - require:
+#      - sls: storage
+#    - watch:
+#      - sls: storage/nodes
+#    - storage
+#    - storage/nodes
+#
+  'roles:core':
     - match: grain
-    - require:
-      - sls: storage
-    - watch:
-      - sls: storage/nodes
-    - storage/nodes
-
+    - core
+    - docker
