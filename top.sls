@@ -26,12 +26,15 @@ base:
     
   'roles:broker':
     - match: grain
+    - docker
     - core.broker
     
   'roles:worker':
     - match: grain
+    - docker
     - core.worker
 
   'roles:frontend':
     - match: grain
+    - docker
     - core.frontend

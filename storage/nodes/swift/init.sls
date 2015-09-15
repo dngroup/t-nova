@@ -89,6 +89,16 @@
       - file: /srv/node/loop2
       - file: /srv/salt/mount-loopback.sh
 
+/srv/node:
+  file.directory:
+    - user: swift
+    - group: swift
+    - makedirs: True
+    - recurse:
+      - user
+      - group
+    - watch:
+      - cmd: /srv/salt/mount-loopback.sh
 
 swift-account:
   service.running:
