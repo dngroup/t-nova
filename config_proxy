@@ -1,0 +1,56 @@
+add-apt-repository ppa:saltstack/salt --yes
+apt-get update
+apt-get install salt-minion --yes
+echo "roles:" > /etc/salt/grains
+
+mkdir -p /etc/pki/tls/certs/
+apt-get install salt-master salt-api git --yes
+
+
+
+echo "fileserver_backend:" >> /etc/salt/master
+echo "  - roots" >> /etc/salt/master
+echo "  - minion" >> /etc/salt/master
+echo "  - git" >> /etc/salt/master
+echo "" >> /etc/salt/master
+echo "file_recv: True" >> /etc/salt/master
+
+
+echo "auto_accept: True" >> /etc/salt/master
+echo "external_auth:" >> /etc/salt/master
+echo "  pam:" >> /etc/salt/master
+echo "    api:" >> /etc/salt/master
+echo "      - .*" >> /etc/salt/master
+      
+echo "rest_cherrypy:" >> /etc/salt/master
+echo "  port: 8000" >> /etc/salt/master
+echo "  debug: True" >> /etc/salt/master
+echo "  ssl_crt: /etc/pki/tls/certs/localhost.crt" >> /etc/salt/master
+echo "  ssl_key: /etc/pki/tls/certs/localhost.key" >> /etc/salt/master
+
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/tls/certs/localhost.key -out /etc/pki/tls/certs/localhost.crt -subj "/C=FR/ST=PACA/L=Bordeaux/O=Dis/CN=t-nova.eu"
+
+
+
+echo "  - swift_proxy" >> /etc/salt/grains
+
+
+
+#add user for api
+echo "api:api::api:::" |newusers
+
+mkdir -p /srv/pillar/
+echo "mine_functions:" > /srv/pillar/swift.sls
+echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls
+
+echo "base:" > /srv/pillar/top.sls
+echo "  '*':" >> /srv/pillar/top.sls
+echo "    - swift" >> /srv/pillar/top.sls
+
+echo "149.202.183.111 salt" > /etc/cloud/templates/hosts.debian.tmpl
+
+service salt-minion restart
+service salt-master restart
+service salt-api restart
+
