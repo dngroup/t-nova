@@ -1,0 +1,33 @@
+
+
+add-apt-repository ppa:saltstack/salt --yes
+apt-get update
+apt-get install salt-minion --yes
+echo "roles:" > /etc/salt/grains
+
+
+echo "log_level: debug" >> /etc/salt/minion
+echo "  - swift_object" >> /etc/salt/grains
+
+service salt-minion restart
+
+mkdir -p /srv/pillar/
+echo "mine_functions:" > /srv/pillar/swift.sls
+echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls
+
+echo "base:" > /srv/pillar/top.sls
+echo "  '*':" >> /srv/pillar/top.sls
+echo "    - swift" >> /srv/pillar/top.sls
+
+echo "log_level: debug" >> /etc/salt/minion
+
+echo "  - core" >> /etc/salt/grains
+echo "  - broker" >> /etc/salt/grains
+echo "  - worker" >> /etc/salt/grains
+echo "  - frontend" >> /etc/salt/grains
+echo "  - swift_object" >> /etc/salt/grains
+
+service salt-minion restart
+
+
+echo "149.202.183.111 salt" > /etc/cloud/templates/hosts.debian.tmpl
