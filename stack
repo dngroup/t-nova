@@ -9,8 +9,10 @@ parameters:
 
   management_net: {default: 2c8648e5-1c22-4547-9dbd-ce987feda3a9, description: Id of  the public network for the compute server, type: string}
   managemen_subnet: {default: 3d50ba5f-d384-42dd-8ef3-32422654f9c2, description: Id of  the public network for the compute server, type: string}
+
   data_in_net: {default: e3837ce1-9206-4577-a3e0-a113edd0d5a5, description: Id of  the data network for the compute server, type: string}
   data_in_subnet: {default: d1ff8838-9b2d-4f8a-adee-a8cdd939797d, description: Id of  the data network for the compute server, type: string}
+
   storage_net: {default: 7e01cd0b-1c97-41e0-85b8-14aaf06d44bf, description: Id of  the storage network for the compute server, type: string}
   storage_subnet: {default: 8238b8a9-3134-4945-af2c-d5284c2754c6, description: Id of  the storage network for the compute server, type: string}
 
@@ -33,7 +35,6 @@ resources:
       image: {get_param: image}
       name: Controller
       networks:
-      - port: {get_resource: port1}
       - network: {get_param: management_net}
       - network: {get_param: data_in_net}
     type: OS::Nova::Server
@@ -57,6 +58,7 @@ resources:
       image: {get_param: image}
       name: CDN-LB
       networks:
+      - port: {get_resource: port1}
       - network: {get_param: management_net}
       - network: {get_param: data_in_net}
       - network: {get_param: storage_net}
