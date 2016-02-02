@@ -1,0 +1,101 @@
+description: Template to deploy one instance with a private network developed on thespot heat_template_version: '2014-10-16'
+parameters:
+  availability_zone: {default: 'nova:cnode3', description: The Availability Zone to launch the instance., type: string}
+  flavor: {default: m1.medium, description: flavor to be used, label: flavor, type: string}
+  image: {default: 9c791a31-35a1-4b25-8278-6fa203a87bf8, description: Image to be used for compute instance, label: Image name or ID, type: string}
+  public_net: {default: 121ad8e8-a656-4baf-a306-9b88db8de2a8, description: Id of the public network for the compute server, type: string}
+  router: {default: b4588ab9-bad6-4860-b277-f2a56e99b37e, description: Id of the router, type: string}
+  sub_public_net: {default: 6f559284-4f19-4d0d-a9a3-1af55a821ab0, description: Id of the public subnet, type: string}
+
+  management_net: {default: 2c8648e5-1c22-4547-9dbd-ce987feda3a9, description: Id of  the public network for the compute server, type: string}
+  managemen_subnet: {default: 3d50ba5f-d384-42dd-8ef3-32422654f9c2, description: Id of  the public network for the compute server, type: string}
+  data_in_net: {default: e3837ce1-9206-4577-a3e0-a113edd0d5a5, description: Id of  the data network for the compute server, type: string}
+  data_in_subnet: {default: d1ff8838-9b2d-4f8a-adee-a8cdd939797d, description: Id of  the data network for the compute server, type: string}
+  storage_net: {default: 7e01cd0b-1c97-41e0-85b8-14aaf06d44bf, description: Id of  the storage network for the compute server, type: string}
+  storage_subnet: {default: 8238b8a9-3134-4945-af2c-d5284c2754c6, description: Id of  the storage network for the compute server, type: string}
+
+resources:
+  floating_ip1:
+    properties:
+      floating_network_id: {get_param: public_net}
+      port_id: {get_resource: port1}
+    type: OS::Neutron::FloatingIP
+  floating_ip2:
+    properties:
+      floating_network_id: {get_param: public_net}
+      port_id: {get_resource: port2}
+    type: OS::Neutron::FloatingIP
+
+  instance1:
+    properties:
+      availability_zone: {get_param: availability_zone}
+      flavor: {get_param: flavor}  #m1.tiny
+      image: {get_param: image}
+      name: Controller
+      networks:
+      - port: {get_resource: port1}
+      - network: {get_param: management_net}
+      - network: {get_param: data_in_net}
+    type: OS::Nova::Server
+
+  instance2:
+    properties:
+      availability_zone: {get_param: availability_zone}
+      flavor: {get_param: flavor} #m1.small
+      image: {get_param: image}
+      name: VHG
+      networks:
+      - port: {get_resource: port2}
+      - network: {get_param: management_net}
+      - network: {get_param: data_in_net}
+    type: OS::Nova::Server
+
+  instance3:
+    properties:
+      availability_zone: {get_param: availability_zone}
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      name: CDN-LB
+      networks:
+      - network: {get_param: management_net}
+      - network: {get_param: data_in_net}
+      - network: {get_param: storage_net}
+    type: OS::Nova::Server
+
+  instance4:
+    properties:
+      availability_zone: {get_param: availability_zone}
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      name: CDN-1
+      networks:
+      - network: {get_param: management_net}
+      - network: {get_param: data_in_net}
+      - network: {get_param: storage_net}
+    type: OS::Nova::Server
+
+  instance5:
+    properties:
+      availability_zone: {get_param: availability_zone}
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      name: CDN-2
+      networks:
+      - network: {get_param: management_net}
+      - network: {get_param: data_in_net}
+      - network: {get_param: storage_net}
+    type: OS::Nova::Server
+
+  port1:
+    properties:
+      fixed_ips:
+      - subnet_id: {get_param: managemen_subnet}
+      network_id: {get_param: management_net}
+    type: OS::Neutron::Port
+  port2:
+    properties:
+      fixed_ips:
+      - subnet_id: {get_param: managemen_subnet}
+      network_id: {get_param: management_net}
+    type: OS::Neutron::Port
+
