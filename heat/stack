@@ -3,7 +3,7 @@ heat_template_version: '2014-10-16'
 parameters:
   availability_zone: {default: 'nova:cnode3', description: The Availability Zone to launch the instance., type: string}
   flavor: {default: m1.medium, description: flavor to be used, label: flavor, type: string}
-  image: {default: 9c791a31-35a1-4b25-8278-6fa203a87bf8, description: Image to be used for compute instance, label: Image name or ID, type: string}
+  image: {default: a625b084-faac-4ceb-a984-4af3af3a202c, description: Image to be used for compute instance, label: Image name or ID, type: string}
   public_net: {default: 121ad8e8-a656-4baf-a306-9b88db8de2a8, description: Id of the public network for the compute server, type: string}
   router: {default: b4588ab9-bad6-4860-b277-f2a56e99b37e, description: Id of the router, type: string}
   sub_public_net: {default: 6f559284-4f19-4d0d-a9a3-1af55a821ab0, description: Id of the public subnet, type: string}
