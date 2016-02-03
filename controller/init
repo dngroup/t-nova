@@ -64,7 +64,7 @@ for (name, ip) in data.items():
     stdin, stdout, stderr = ssh.exec_command("echo %s salt >> /etc/hosts" % masterIp)
     print stdout.read()
 
-    _do(ssh, 'echo "roles:" > /etc/salt/grains"')
+    _do(ssh, 'echo "roles:" > /etc/salt/grains')
     _do(ssh, 'mkdir -p /srv/pillar/')
     _do(ssh, 'echo "mine_functions:" > /srv/pillar/swift.sls')
     _do(ssh, 'echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls')
