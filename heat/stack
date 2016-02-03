@@ -1,4 +1,5 @@
-description: Template to deploy one instance with a private network developed on thespot heat_template_version: '2014-10-16'
+description: Template to deploy one instance with a private network developed on thespot
+heat_template_version: '2014-10-16'
 parameters:
   availability_zone: {default: 'nova:cnode3', description: The Availability Zone to launch the instance., type: string}
   flavor: {default: m1.medium, description: flavor to be used, label: flavor, type: string}
