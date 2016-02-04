@@ -1,8 +1,7 @@
 nherbaut/worker:
   docker.pulled:
     - tag: latest
-    - require:
-      - sls: docker
+
 
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}

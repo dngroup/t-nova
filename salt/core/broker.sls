@@ -1,8 +1,7 @@
 rabbitmq:
   docker.pulled:
     - tag: 3.5.4-management
-    - require:
-      - sls: docker
+
 
 core-broker:
   docker.running:
