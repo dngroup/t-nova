@@ -1,4 +1,7 @@
-ubuntu-cloud-keyring:
+gnupg:
+  pkg.installed
+
+aptitude:
   pkg.installed
 
 
