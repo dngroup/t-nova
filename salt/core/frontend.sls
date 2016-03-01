@@ -18,7 +18,7 @@ core-frontend:
   docker.running:
     - image:  nherbaut/adapted-video-frontend
     - ports:
-      - "8080" : "8080"
+      - "18080" : "8080"
     - environment:
       - "AMQP_PORT_5672_TCP_ADDR" : "{{ broker_ip }}"
       - "AMQP_PORT_5672_TCP_PORT" : "5672"

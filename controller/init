@@ -27,7 +27,9 @@ for (name, ip) in data.items():
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
     _do(ssh, 'apt-get update')
     _do(ssh, 'apt-get install salt-minion --yes')
-    stdin, stdout, stderr = ssh.exec_command('echo "minion_%s" > /etc/salt/minion_id' % name)
+    stdin, stdout, stderr = ssh.exec_command('pip install docker-py --upgrade')
+    print stdout.read()
+    stdin, stdout, stderr = ssh.exec_command('echo "%s" > /etc/salt/minion_id' % name)
     # for everbody
     stdin, stdout, stderr = ssh.exec_command("echo %s salt >> /etc/hosts" % masterIp)
     print stdout.read()
