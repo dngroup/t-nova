@@ -4,12 +4,12 @@
 import subprocess
 import json
 import paramiko
-
+import sys
 
 def _do(ssh, command):
     stdin, stdout, stderr = ssh.exec_command(command)
     print stdout.read()
-
+    sys.stderr.write(stderr.read())
 
 with open("data.json") as f:
     data = json.loads(f.read())
@@ -81,3 +81,5 @@ for (name, ip) in data.items():
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     stdin, stdout, stderr = ssh.exec_command("service salt-minion restart")
     print stdout.read()
+
+print "Finish complete"

@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+
+import subprocess
+import json
+import paramiko
+
+
+def _do(ssh, command):
+    stdin, stdout, stderr = ssh.exec_command(command)
+    print stdout.read()
+
+
+with open("data.json") as f:
+    data = json.loads(f.read())
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+masterIp = data["Controller"]
+for (name, ip) in data.items():
+    print name, " ", ip
+    ssh.connect(ip, username="root")
+    _do(ssh, 'rm /etc/salt/grains')
+    _do(ssh, 'apt-get remove salt-minion --yes')
+    _do(ssh, 'rm /etc/salt/minion_id')
+    _do(ssh, "sed '/salt/d' /etc/hosts")
+    _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
+    if (name == "Controller"):
+        stdin, stdout, stderr = ssh.exec_command('apt-get remove salt-master --yes')
+        print stdout.read()
+        stdin, stdout, stderr = ssh.exec_command('rm  /etc/salt/master')
+        print stdout.read()
+        print "Finish"
+
+print "Finish complete"
+
+
+
