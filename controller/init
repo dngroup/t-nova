@@ -4,12 +4,12 @@
 import subprocess
 import json
 import paramiko
-
+import sys
 
 def _do(ssh, command):
     stdin, stdout, stderr = ssh.exec_command(command)
     print stdout.read()
-
+    sys.stderr.write(stderr.read())
 
 with open("data2.json") as f:
     data = json.loads(f.read())
@@ -27,7 +27,9 @@ for (name, ips) in data.items():
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
     _do(ssh, 'apt-get update')
     _do(ssh, 'apt-get install salt-minion --yes')
-    stdin, stdout, stderr = ssh.exec_command('echo "minion_%s" > /etc/salt/minion_id' % name)
+    stdin, stdout, stderr = ssh.exec_command('pip install docker-py --upgrade')
+    print stdout.read()
+    stdin, stdout, stderr = ssh.exec_command('echo "%s" > /etc/salt/minion_id' % name)
     # for everbody
     stdin, stdout, stderr = ssh.exec_command("echo %s salt >> /etc/hosts" % masterIp)
     print stdout.read()
@@ -79,3 +81,7 @@ for (name, ips) in data.items():
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     stdin, stdout, stderr = ssh.exec_command("service salt-minion restart")
     print stdout.read()
+#ssh.connect("127.0.0.1", username="root")
+#_do(ssh, 'salt-key -d VHG --yes')
+
+print "Finish complete"

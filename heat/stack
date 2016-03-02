@@ -36,7 +36,8 @@ resources:
       image: {get_param: image}
       name: Controller
       networks:
-      - network: {get_param: management_net}
+      - port: {get_resource: port3}
+#      - network: {get_param: management_net}
       - network: {get_param: data_in_net}
     type: OS::Nova::Server
 
@@ -48,7 +49,7 @@ resources:
       name: VHG
       networks:
       - port: {get_resource: port2}
-      - network: {get_param: management_net}
+#      - network: {get_param: management_net}
       - network: {get_param: data_in_net}
     type: OS::Nova::Server
 
@@ -60,7 +61,7 @@ resources:
       name: CDN-LB
       networks:
       - port: {get_resource: port1}
-      - network: {get_param: management_net}
+#      - network: {get_param: management_net}
       - network: {get_param: data_in_net}
       - network: {get_param: storage_net}
     type: OS::Nova::Server
@@ -95,6 +96,7 @@ resources:
       - subnet_id: {get_param: managemen_subnet}
       network_id: {get_param: management_net}
     type: OS::Neutron::Port
+
   port2:
     properties:
       fixed_ips:
@@ -102,3 +104,9 @@ resources:
       network_id: {get_param: management_net}
     type: OS::Neutron::Port
 
+  port3:
+    properties:
+      fixed_ips:
+      - subnet_id: {get_param: managemen_subnet}
+      network_id: {get_param: management_net}
+    type: OS::Neutron::Port
