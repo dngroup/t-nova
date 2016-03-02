@@ -11,7 +11,7 @@ def _do(ssh, command):
     print stdout.read()
 
 
-with open("data.json") as f:
+with open("data2.json") as f:
     data = json.loads(f.read())
 
 ssh = paramiko.SSHClient()
@@ -19,9 +19,9 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
 masterIp = data["Controller"]
 
-for (name, ip) in data.items():
-    print name, " ", ip
-    ssh.connect(ip, username="root")
+for (name, ips) in data.items():
+    print name, " ", ips , " connect to " , ips["management"]
+    ssh.connect(ips["management"], username="root")
     _do(ssh, 'service salt-minion stop')
     _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
