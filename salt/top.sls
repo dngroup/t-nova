@@ -34,3 +34,7 @@ base:
   'roles:frontend':
     - match: grain
     - core.frontend
+
+  'roles:vhg':
+    - match: grain
+    - core.vhg
