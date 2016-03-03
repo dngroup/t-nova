@@ -17,7 +17,7 @@ with open("data.json") as f:
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-masterIp = data["Controller"]
+masterIp = data["Controller"]["management"]
 
 for (name, ips) in data.items():
     print name, " ", ips , " connect to " , ips["management"]
