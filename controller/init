@@ -27,6 +27,7 @@ for (name, ips) in data.items():
     ssh.connect(ips["management"], username="root")
     _do(ssh, 'service salt-minion stop')
     _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
+    _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
     _do(ssh, 'apt-get update')
     _do(ssh, 'apt-get install salt-minion --yes')
