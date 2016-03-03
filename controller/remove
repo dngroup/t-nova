@@ -17,10 +17,10 @@ with open("data.json") as f:
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-masterIp = data["Controller"]
-for (name, ip) in data.items():
-    print name, " ", ip
-    ssh.connect(ip, username="root")
+masterIp = data["Controller"]["management"]
+for (name, ips) in data.items():
+    print name, " ", ips , " connect to " , ips["management"]
+    ssh.connect(ips["management"], username="root")
     _do(ssh, 'rm /etc/salt/grains')
     _do(ssh, 'apt-get remove salt-minion --yes')
     _do(ssh, 'rm /etc/salt/minion_id')
