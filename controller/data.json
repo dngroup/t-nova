@@ -1,27 +1,27 @@
 {
   "Controller": {
-    "management": "10.10.2.117",
-    "data_in": "10.10.4.78"
+    "management": "10.10.2.133",
+    "data_in": "10.10.4.89"
   },
   "VHG": {
-    "management": "10.10.2.119",
-    "Floating_IP": "10.10.1.244",
-    "data_in": "10.10.4.77"
+    "management": "10.10.2.131",
+    "Floating_IP": "10.10.1.253",
+    "data_in": "10.10.4.9"
   },
   "CDN-LB": {
-    "management": "10.10.2.116",
-    "Floating_IP": "10.10.1.243",
-    "storage": "10.10.3.51",
-    "data_in": "10.10.4.79"
+    "management": "10.10.2.134",
+    "Floating_IP": "10.10.1.254",
+    "storage": "10.10.3.59",
+    "data_in": "10.10.4.90"
   },
   "CDN-1": {
-    "management": "10.10.2.118",
-    "storage": "10.10.3.5",
-    "data_in": "10.10.4.75"
+    "management": "10.10.2.132",
+    "storage": "10.10.3.57",
+    "data_in": "10.10.4.87"
   },
   "CDN-2": {
-    "management": "10.10.2.120",
-    "storage": "10.10.3.50",
-    "data_in": "10.10.4.76"
+    "management": "10.10.2.135",
+    "storage": "10.10.3.58",
+    "data_in": "10.10.4.88"
   }
 }

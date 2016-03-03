@@ -74,7 +74,10 @@ for (name, ips) in data.items():
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
-#ssh.connect("127.0.0.1", username="root")
-#_do(ssh, 'salt-key -d VHG --yes')
+print "start salt"
+ssh.connect("127.0.0.1", username="root")
+_do(ssh, 'salt 'CDN-LB' state.highstate')
+_do(ssh, 'salt '*' state.highstate')
+
 
 print "Finish complete"
