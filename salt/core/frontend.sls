@@ -24,6 +24,6 @@ core-frontend:
     - environment:
       - "AMQP_PORT_5672_TCP_ADDR" : "{{ broker_ip }}"
       - "AMQP_PORT_5672_TCP_PORT" : "5672"
-      - "STREAMER_URL" : " http://{{swift_proxy_ip}}:8080/v1/AUTH_admin/"
+      - "STREAMER_URL" : " http://{{ pillar['ips']['CDN-LB']['Floating_IP'] }}:8080/v1/AUTH_admin/"
     - require: 
       - docker: nherbaut/adapted-video-frontend
