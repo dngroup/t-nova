@@ -1,4 +1,4 @@
-nherbaut/adapted-video-osgi-bundle:
+dngroup/adapted-video-osgi-bundle:
   docker.pulled:
     - tag: latest
 
@@ -16,7 +16,7 @@ nherbaut/adapted-video-osgi-bundle:
 
 vhg:
   docker.running:
-    - image:  nherbaut/adapted-video-osgi-bundle
+    - image:  dngroup/adapted-video-osgi-bundle
     - ports:
       - "8080/tcp":
           HostIp: "0.0.0.0"
@@ -25,4 +25,4 @@ vhg:
       - "FRONTAL_PORT" : "5000"
       - "FRONTAL_HOSTNAME" : "{{ pillar['ips']['CDN-LB']['management'] }}"
     - require: 
-      - docker: nherbaut/adapted-video-osgi-bundle
+      - docker: dngroup/adapted-video-osgi-bundle
