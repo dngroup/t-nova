@@ -23,10 +23,17 @@ resources:
       floating_network_id: {get_param: public_net}
       port_id: {get_resource: port1}
     type: OS::Neutron::FloatingIP
+    
   floating_ip2:
     properties:
       floating_network_id: {get_param: public_net}
       port_id: {get_resource: port2}
+    type: OS::Neutron::FloatingIP
+    
+  floating_ip3:
+    properties:
+      floating_network_id: {get_param: public_net}
+      port_id: {get_resource: port3}
     type: OS::Neutron::FloatingIP
 
   instance1:
