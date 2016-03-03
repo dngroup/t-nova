@@ -12,7 +12,7 @@ def _do(ssh, command):
     print stdout.read()
     sys.stderr.write(stderr.read())
 
-with open("data2.json") as f:
+with open("data.json") as f:
     data = json.loads(f.read())
 
 ssh = paramiko.SSHClient()
