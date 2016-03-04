@@ -1,19 +1,19 @@
 {
   
-    "Controller_management": "10.10.2.133",
-    "Controller_data_in": "10.10.4.89",
-    "VHG_management": "10.10.2.131",
-    "VHG_Floating_IP": "10.10.1.253",
-    "VHG_data_in": "10.10.4.9",
-    "CDN-LB_management": "10.10.2.134",
-    "CDN-LB_Floating_IP": "10.10.1.254",
-    "CDN-LB_storage": "10.10.3.59",
-    "CDN-LB_data_in": "10.10.4.90"
-    "CDN-1_management": "10.10.2.132",
-    "CDN-1_storage": "10.10.3.57",
-    "CDN-1_data_in": "10.10.4.87",
-    "CDN-2_management": "10.10.2.135",
-    "CDN-2_storage": "10.10.3.58",
-    "CDN-2_data_in": "10.10.4.88",
+    "Controller.management": "10.10.2.133",
+    "Controller.data_in": "10.10.4.89",
+    "VHG.management": "10.10.2.131",
+    "VHG.Floating_IP": "10.10.1.253",
+    "VHG.data_in": "10.10.4.9",
+    "CDN-LB.management": "10.10.2.134",
+    "CDN-LB.Floating_IP": "10.10.1.254",
+    "CDN-LB.storage": "10.10.3.59",
+    "CDN-LB.data_in": "10.10.4.90"
+    "CDN-1.management": "10.10.2.132",
+    "CDN-1.storage": "10.10.3.57",
+    "CDN-1.data_in": "10.10.4.87",
+    "CDN-2.management": "10.10.2.135",
+    "CDN-2.storage": "10.10.3.58",
+    "CDN-2.data_in": "10.10.4.88",
   
 }
