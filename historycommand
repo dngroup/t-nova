@@ -1,0 +1,209 @@
+    1  reboot 
+    2  ci 
+    3  vi /etc/ssh/sshd_config 
+    4  exit
+    5  ip a
+    6  reboot 
+    7  ls
+    8  cd
+    9  ssh-keygen 
+   10  rm ~/.ssh/id_rsa
+   11  vi ~/.ssh/id_rsa
+   12  rm ~/.ssh/id_rsa.pub
+   13  vi ~/.ssh/id_rsa.pub
+   14  exit
+   15  beep
+   16  df
+   17  df -H
+   18  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+   19  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+   20  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -
+   21  env |grep LANG
+   22  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -
+   23  apt-get install sudo
+   24  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+   25  ping repo.saltstack.com
+   26  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub 
+   27  man wget
+   28  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub  --no-check-certificate
+   29  date
+   30  wget https://repo.saltstack.com
+   31  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub  --no-check-certificate
+   32  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub --no-check-certificate | sudo apt-key add -
+   33  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub --no-check-certificate| sudo apt-key add -
+   34  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub --no-check-certificate
+   35  wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub --no-check-certificate| sudo apt-key add -
+   36  echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" > /etc/apt/sources.list
+   37  sudo apt-get install apt-transport-https
+   38  apt-get update
+   39  vi /etc/apt/sources.list
+   40  apt-get update
+   41  apt-get install salt-minion
+   42  apt-get install salt-minion
+   43  apt-get update
+   44  vi /etc/apt/sources.list
+   45  vi /etc/apt/sources.list
+   46  apt-get update
+   47  apt-get install salt-minion
+   48  apt-get install docker-engine
+   49  apt-get update
+   50  vi /etc/network/interfaces
+   51  apt-get install vim
+   52  exit
+   53  apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+   54  nano /etc/apt/sources.list.d/docker.list
+   55  env | grep LANG
+   56  export LANG=es_ES.UTF-8
+   57  export LANG=en_us.utf8
+   58  dpkg-reconfigure locales
+   59  env | grep LANG
+   60  nano
+   61  nano /etc/apt/sources.list.d/docker.list
+   62  sudo apt-get update
+   63  apt-get update
+   64  apt-get apt-transport-https
+   65  apt-get install apt-transport-https
+   66  nano /etc/apt/sources.list.d/docker.list
+   67  apt-get update
+   68  nano /etc/apt/sources.list
+   69  nano /etc/apt/sources.list
+   70  apt-get install apt-transport-https
+   71  nano /etc/apt/sources.list.d/docker.list
+   72  ls
+   73  pwd
+   74  ls
+   75  allow-hotplug eth0
+   76  iface eth0 inet dhcp
+   77  vi /etc/network/interfaces
+   78  vi /etc/network/interfaces
+   79  apt-get install python-easyinstall
+   80  apt-cache search |grep easyinstall
+   81  apt-cache search easyinstall
+   82  apt-get install python-setuptools
+   83  pip install docker-py=1.2.3
+   84  easyinstall install pip 
+   85  easy_install pip
+   86  pip install docker-py=1.2.3
+   87  pip install docker-py==1.2.3
+   88  python
+   89  exit
+   90  cd
+   91  ls
+   92  exit
+   93  ssh localhost
+   94  ls
+   95  cd .ssh/
+   96  ls
+   97  cat ./id_rsa.pub >> authorized_keys
+   98  exit
+   99  exit
+  100  ssh localhost
+  101  chmod 400 /root/.ssh/id_rsa
+  102  chmod 400 /root/.ssh/id_rsa.pub 
+  103  ssh localhost
+  104  sudo apt-get install docker
+  105  docker ps
+  106  docker --version
+  107  docker --versions
+  108  docker
+  109  sudo apt-get install docker-engine
+  110  docker --versions
+  111  docker --version
+  112  reboot 
+  113  ssh localhost
+  114  docker ps
+  115  docker ps
+  116  git clone https://github.com/dngroup/t-nova.git
+  117  cd t-nova/controller/
+  118  nano data.json
+  119  ./start 
+  120  salt 'CDN-LB' state.highstate
+  121  salt '*' state.highstate
+  122  nano init 
+  123  git pull
+  124  git add init 
+  125  git status
+  126  git add data.json
+  127  git commit
+  128  git config --global user.email "dbourasseau@viotech.net"
+  129  git commit
+  130  git ^push
+  131  git push
+  132  git push
+  133  nano data.json
+  134  salt 'VHG' state.highstate
+  135  git pull
+  136  salt 'VHG' state.highstate
+  137  salt 'CDN-LB' cmd.run 'docker ps'
+  138  salt '*' cmd.run 'docker ps'
+  139  salt 'VHG' cmd.run 'docker ps'
+  140  salt 'VHG' cmd.run 'docker inspect vhg'
+  141  ping 10.10.2.134
+  142  ssh vhg
+  143  salt 'VHG' cmd.run ''
+  144  salt 'VHG' cmd.run 'docker ps'
+  145  salt 'VHG' cmd.run 'ip a'
+  146  ping vhg
+  147  ssh 10.10.2.131
+  148  nano 
+  149  git pull
+  150  salt 'VHG' cmd.run 'ip a'
+  151  salt 'VHG' state.highstate
+  152  cd t-nova/controller/init 
+  153  nano t-nova/controller/init 
+  154  cat /etc/hosts
+  155  python
+  156  cd t-nova/controller/
+  157  #!/usr/bin/env python
+  158  import subprocess
+  159  import json
+  160  import paramiko
+  161  import sys
+  162  import yaml
+  163  def _do(ssh, command):
+  164      stdin, stdout, stderr = ssh.exec_command(command)
+  165      print stdout.read()
+  166      sys.stderr.write(stderr.read())
+  167  with open("data.json") as f:
+  168      data = json.loads(f.read())
+  169  ssh = paramiko.SSHClient()
+  170  ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+  171  masterIp = data["Controller"]["management"]
+  172  ips_json={"ips":data}
+  173  yml = yaml.safe_dump(ips_json, allow_unicode=True)
+  174  print yml
+  175  python
+  176  cat /etc/hosts
+  177  cat /etc/hostname 
+  178  cat /etc/hostname 
+  179  git stat
+  180  git status
+  181  git add init 
+  182  git push
+  183  git commit -m "change the hostname of hosts"
+  184  git push
+  185  nano /etc/hostname 
+  186  /etc/init.d/hostname.sh 
+  187  curl -i -X GET -H 'X-Auth-User: admin:admin' -H 'X-Auth-Key: admin' http://10.10.1.254:8080/auth/v1.0
+  188  suod apt-get install curl -y
+  189  sudo apt-get install curl -y
+  190  curl -i -X GET -H 'X-Auth-User: admin:admin' -H 'X-Auth-Key: admin' http://10.10.1.254:8080/auth/v1.0
+  191  python
+  192  signature=ff0dc7f01153e0b7df3385f47d86778b2eae3dd1
+  193  dpkg -l | grep cloud
+  194  dpkg -l 
+  195  sudo apt-cache search cloud
+  196  sudo apt-cache search cloud-int
+  197  sudo apt-cache search cloudinit
+  198  sudo apt-cache search cloud-init
+  199  cat /etc/networks
+  200  cat /etc/network/interfaces
+  201  sudo apt-get install cloud-init
+  202  ls /etc/init.d/
+  203  curl -i -X GET -H 'X-Auth-User: admin:admin' -H 'X-Auth-Key: admin' http://10.10.1.254:8080/auth/v1.0
+  204  curl -i -X GET -H 'X-Auth-User: admin:admin' -H 'X-Auth-Key: admin' http://10.10.1.254:8080/auth/v1.0
+  205  history 
+  206  swift post -m "Temp-URL-Key:MYKEY"
+  207  ssh cdn-lb
+  208  history 
+
