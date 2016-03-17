@@ -33,6 +33,9 @@ for (name, ips) in data.items():
     _do(ssh, 'apt-get install salt-minion --yes')
     _do(ssh, 'pip install docker-py --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
+    _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
+    _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
+    _do(ssh, '/etc/init.d/hostname.sh start')
     # for everbody
     _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
