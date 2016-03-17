@@ -5,17 +5,17 @@ parameters:
   flavor: {default: m1.medium, description: flavor to be used, label: flavor, type: string}
   image: {default: a625b084-faac-4ceb-a984-4af3af3a202c, description: Image to be used for compute instance, label: Image name or ID, type: string}
   public_net: {default: 121ad8e8-a656-4baf-a306-9b88db8de2a8, description: Id of the public network for the compute server, type: string}
-  router: {default: b4588ab9-bad6-4860-b277-f2a56e99b37e, description: Id of the router, type: string}
   sub_public_net: {default: 6f559284-4f19-4d0d-a9a3-1af55a821ab0, description: Id of the public subnet, type: string}
+  router: {default: a6cfe8b7-bb8a-4d3d-a0c2-c21f8697d085, description: Id of the router, type: string}
 
-  management_net: {default: 2c8648e5-1c22-4547-9dbd-ce987feda3a9, description: Id of  the public network for the compute server, type: string}
-  managemen_subnet: {default: 3d50ba5f-d384-42dd-8ef3-32422654f9c2, description: Id of  the public network for the compute server, type: string}
+  management_net: {default: 0617346f-d475-4001-9829-8301a414df52, description: Id of  the public network for the compute server, type: string}
+  management_subnet: {default: 67fd920a-5a66-465a-8638-5fa685be0460, description: Id of  the public network for the compute server, type: string}
 
-  data_in_net: {default: e3837ce1-9206-4577-a3e0-a113edd0d5a5, description: Id of  the data network for the compute server, type: string}
-  data_in_subnet: {default: d1ff8838-9b2d-4f8a-adee-a8cdd939797d, description: Id of  the data network for the compute server, type: string}
+  data_in_net: {default: 8ac49c7f-9642-4a85-adb9-f577fe7979cb, description: Id of  the data network for the compute server, type: string}
+  data_in_subnet: {default: c40802a8-c0c3-48be-9eef-2fe959ee4ea7, description: Id of  the data network for the compute server, type: string}
 
-  storage_net: {default: 7e01cd0b-1c97-41e0-85b8-14aaf06d44bf, description: Id of  the storage network for the compute server, type: string}
-  storage_subnet: {default: 8238b8a9-3134-4945-af2c-d5284c2754c6, description: Id of  the storage network for the compute server, type: string}
+  storage_net: {default: dcce4eb7-03bd-4742-a23e-f241fd98d762, description: Id of  the storage network for the compute server, type: string}
+  storage_subnet: {default: 4bc4947e-28e9-4694-92e2-040e9b2702ee, description: Id of  the storage network for the compute server, type: string}
 
 resources:
   floating_ip1:
@@ -100,20 +100,20 @@ resources:
   port1:
     properties:
       fixed_ips:
-      - subnet_id: {get_param: managemen_subnet}
+      - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
     type: OS::Neutron::Port
 
   port2:
     properties:
       fixed_ips:
-      - subnet_id: {get_param: managemen_subnet}
+      - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
     type: OS::Neutron::Port
 
   port3:
     properties:
       fixed_ips:
-      - subnet_id: {get_param: managemen_subnet}
+      - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
     type: OS::Neutron::Port
