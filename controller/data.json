@@ -8,12 +8,12 @@
     "CDN-LB.management": "10.10.2.134",
     "CDN-LB.Floating_IP": "10.10.1.254",
     "CDN-LB.storage": "10.10.3.59",
-    "CDN-LB.data_in": "10.10.4.90"
+    "CDN-LB.data_in": "10.10.4.90",
     "CDN-1.management": "10.10.2.132",
     "CDN-1.storage": "10.10.3.57",
     "CDN-1.data_in": "10.10.4.87",
     "CDN-2.management": "10.10.2.135",
     "CDN-2.storage": "10.10.3.58",
-    "CDN-2.data_in": "10.10.4.88",
+    "CDN-2.data_in": "10.10.4.88"
   
 }

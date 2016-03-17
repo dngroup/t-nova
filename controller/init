@@ -14,15 +14,23 @@ def _do(ssh, command):
 
 with open("data.json") as f:
     data = json.loads(f.read())
+data2={};
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-masterIp = data["Controller"]["management"]
-ips_json={"ips":data}
+for (name, ip) in data.items():
+    name2=name.split(".");
+    try:
+        data2[name2[0]][name2[1]]=ip;
+    except:
+        data2[name2[0]]={};
+        data2[name2[0]][name2[1]]=ip;
+masterIp = data2["Controller"]["management"]
+ips_json={"ips":data2}
 yml = yaml.safe_dump(ips_json, allow_unicode=True)
 print yml
 
-for (name, ips) in data.items():
+for (name, ips) in data2.items():
     print name, " ", ips , " connect to " , ips["management"]
     ssh.connect(ips["management"], username="root")
     _do(ssh, 'service salt-minion stop')
@@ -80,7 +88,7 @@ for (name, ips) in data.items():
 
 print "start salt"
 ssh.connect("127.0.0.1", username="root")
-_do(ssh, 'salt 'CDN-LB' state.highstate')
+_do(ssh, 'salt "CDN-LB" state.highstate')
 _do(ssh, 'salt '*' state.highstate')
 
 
