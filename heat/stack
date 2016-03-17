@@ -6,7 +6,7 @@ parameters:
   image: {default: a625b084-faac-4ceb-a984-4af3af3a202c, description: Image to be used for compute instance, label: Image name or ID, type: string}
   public_net: {default: 121ad8e8-a656-4baf-a306-9b88db8de2a8, description: Id of the public network for the compute server, type: string}
   sub_public_net: {default: 6f559284-4f19-4d0d-a9a3-1af55a821ab0, description: Id of the public subnet, type: string}
-  router: {default: e4e2370a-4bc1-4512-ba07-abec84a655a5, description: Id of the router, type: string}
+  router: {default: a6cfe8b7-bb8a-4d3d-a0c2-c21f8697d085, description: Id of the router, type: string}
 
   management_net: {default: 0617346f-d475-4001-9829-8301a414df52, description: Id of  the public network for the compute server, type: string}
   management_subnet: {default: 67fd920a-5a66-465a-8638-5fa685be0460, description: Id of  the public network for the compute server, type: string}
