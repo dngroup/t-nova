@@ -1,4 +1,4 @@
-nherbaut/worker:
+dngroup/vhg-adaptation-worker:
   docker.pulled:
     - tag: latest
 
@@ -16,20 +16,20 @@ nherbaut/worker:
 core-worker-container:
   docker.installed:
     - name: core-worker-container
-    - image: nherbaut/worker:latest
+    - image: dngroup/vhg-adaptation-worker:t-nova
     - environment:
       - "CELERY_BROKER_URL" : "amqp://guest@{{ broker_ip }}"
       - "ST_AUTH" : "http://{{ swift_proxy_ip }}:8080/auth/v1.0"
       - "ST_USER" : "admin:admin"
       - "ST_KEY" : "admin"
     - watch:
-      - docker: nherbaut/worker
+      - docker: dngroup/vhg-adaptation-worker
       
 
 
 core-worker:
   docker.running:
-    - image: nherbaut/worker:latest
+    - image: dngroup/vhg-adaptation-worker:t-nova
     - environment:
       - "CELERY_BROKER_URL" : "amqp://guest@{{ broker_ip }}"
       - "ST_AUTH" : "http://{{ swift_proxy_ip }}:8080/auth/v1.0"

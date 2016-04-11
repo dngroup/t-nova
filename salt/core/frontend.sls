@@ -1,4 +1,4 @@
-nherbaut/adapted-video-frontend:
+dngroup/adapted-video-frontend:
   docker.pulled:
     - tag: latest
 
@@ -16,7 +16,7 @@ nherbaut/adapted-video-frontend:
 
 core-frontend:
   docker.running:
-    - image:  nherbaut/adapted-video-frontend
+    - image:  dngroup/adapted-video-frontend
     - ports:
       - "8080/tcp":
           HostIp: "0.0.0.0"
@@ -26,4 +26,4 @@ core-frontend:
       - "AMQP_PORT_5672_TCP_PORT" : "5672"
       - "STREAMER_URL" : " http://{{ pillar['ips']['CDN-LB']['Floating_IP'] }}:8080/v1/AUTH_admin/"
     - require: 
-      - docker: nherbaut/adapted-video-frontend
+      - docker: dngroup/adapted-video-frontend
