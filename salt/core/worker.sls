@@ -23,7 +23,7 @@ core-worker-container:
       - "ST_USER" : "admin:admin"
       - "ST_KEY" : "admin"
     - watch:
-      - docker: dngroup/vhg-adaptation-worker:t-nova
+      - docker: dngroup/vhg-adaptation-worker
       
 
 
