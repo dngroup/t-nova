@@ -38,7 +38,7 @@ for (name, ips) in data2.items():
     _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
     _do(ssh, 'apt-get update')
-    _do(ssh, 'apt-get install salt-minion --yes')
+    _do(ssh, 'apt-get install salt-minion docker-engine --yes')
     _do(ssh, 'pip install docker-py --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
