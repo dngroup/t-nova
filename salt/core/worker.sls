@@ -1,6 +1,6 @@
 dngroup/vhg-adaptation-worker:
   docker.pulled:
-    - tag: latest
+    - tag: t-nova
 
 
 
