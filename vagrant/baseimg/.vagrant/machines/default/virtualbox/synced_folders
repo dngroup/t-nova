@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/dbourasseau/vagrant/baseimg","disabled":false,"owner":"vagrant","group":"vagrant"}}}

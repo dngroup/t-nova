@@ -1,0 +1,95 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+boxes = [
+    {
+        :name => "Controleur",
+        :eth1 => "192.168.236.60",
+        :eth2 => "192.168.252.60",
+        :mem => "512",
+        :cpu => "1",
+        :nodetype => "Controleur"
+    },
+	{
+        :name => "CDN-LB",
+        :eth1 => "192.168.236.70",
+        :eth2 => "192.168.252.70",
+        :mem => "1024",
+        :cpu => "1",
+        :nodetype => "swift_proxy"
+    },
+    {
+        :name => "CDN-1",
+        :eth1 => "192.168.236.71",
+        :eth2 => "192.168.252.71",
+        :mem => "1024",
+        :cpu => "1",
+        :nodetype => "swift_object"
+    },
+    {
+        :name => "CDN-2",
+        :eth1 => "192.168.236.72",
+        :eth2 => "192.168.252.72",
+        :mem => "1024",
+        :cpu => "1",
+        :nodetype => "swift_object"
+    },   
+	{
+        :name => "VHG",
+        :eth1 => "192.168.236.80",
+        :eth2 => "192.168.252.80",
+        :mem => "512",
+        :cpu => "1",
+        :nodetype => "vhg"
+    }
+]
+
+
+$controleur = <<CONTROLLER
+
+echo "{"Controller.management":"10.10.2.133","Controller.data_in":"10.10.4.89","VHG.management":"10.10.2.131","VHG.Floating_IP":"10.10.1.253","VHG.data_in":"10.10.4.9","CDN-LB.management":"10.10.2.134","CDN-LB.Floating_IP":"10.10.1.254","CDN-LB.storage":"10.10.3.59","CDN-LB.data_in":"10.10.4.90","CDN-1.management":"10.10.2.132","CDN-1.storage":"10.10.3.57","CDN-1.data_in":"10.10.4.87","CDN-2.management":"10.10.2.135","CDN-2.storage":"10.10.3.58","CDN-2.data_in":"10.10.4.88"}">/root/data.json
+wget https://raw.githubusercontent.com/dngroup/t-nova/master/controller/start /root/start
+chmod 777 /root/start
+pwd
+ls
+
+CONTROLLER
+
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  
+  config.vm.box = "../package.box"
+  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
+  config.ssh.username = "root"
+  config.ssh.password = "toor"
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
+      config.vm.hostname = opts[:name]
+
+
+      config.vm.network :private_network, ip: opts[:eth1]
+      config.vm.network :private_network, ip: opts[:eth2]
+
+      config.vm.provider "vmware_fusion" do |v|
+        v.vmx["memsize"] = opts[:mem]
+        v.vmx["numvcpus"] = opts[:cpu]
+      end
+
+      config.vm.provider "virtualbox" do |v|
+        v.customize ["modifyvm", :id, "--memory", opts[:mem]]
+        v.customize ["modifyvm", :id, "--cpus", opts[:cpu]]
+      end
+
+      if opts[:nodetype] == "Controleur"
+          config.vm.provision :shell, inline: $controleur
+      end
+      
+      
+    end
+  end
+end

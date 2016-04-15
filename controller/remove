@@ -11,16 +11,30 @@ def _do(ssh, command):
     print stdout.read()
 
 
+
+
 with open("data.json") as f:
     data = json.loads(f.read())
+
+data2 = {};
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+for (name, ip) in data.items():
+    name2 = name.split(".");
+    try:
+        data2[name2[0]][name2[1]] = ip;
+    except:
+        data2[name2[0]] = {};
+        data2[name2[0]][name2[1]] = ip;
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-masterIp = data["Controller"]["management"]
-for (name, ips) in data.items():
-    print name, " ", ips , " connect to " , ips["management"]
+masterIp = data2["Controller"]["management"]
+for (name, ips) in data2.items():
+    print name, " ", ips, " connect to ", ips["management"]
     ssh.connect(ips["management"], username="root")
+    _do(ssh, 'rm /srv/pillar/ips.sls')
     _do(ssh, 'rm /etc/salt/grains')
     _do(ssh, 'apt-get remove salt-minion --yes')
     _do(ssh, 'rm /etc/salt/minion_id')
@@ -34,6 +48,3 @@ for (name, ips) in data.items():
         print "Finish"
 
 print "Finish complete"
-
-
-

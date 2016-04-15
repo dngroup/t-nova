@@ -1,0 +1,118 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "debian/jessie64"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  config.vm.provision "shell", inline: <<-SHELL
+    echo root:toor | /usr/sbin/chpasswd
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates
+    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+    echo "deb https://apt.dockerproject.org/repo debian-jessie main" >> /etc/apt/sources.list.d/docker.list
+    wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -
+    sed '/saltstack/d' /etc/apt/sources.list
+    echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list
+    sudo apt-get install docker-engine=1.10.3-0~jessie salt-minion python python-pip build-essential python-paramiko cloud-init  -y cloud-init
+    sed -i.bak 's/^# Example datasource config.*/datasource:\\n   CloudStack:\\n     timeout : 10\\n     max_wait : 10\\n   Ec2:\\n     timeout: 2 # (defaults to 50 seconds)\\n     max_wait: 5 # (defaults to 120 seconds)\\n/' /etc/cloud/cloud.cfg
+    pip install docker-py==1.8.0 --upgrade
+    mkdir -p /root/.ssh
+    cp /vagrant/keys/vhg /root/.ssh/id_rsa
+    cp /vagrant/keys/vhg.pub /root/.ssh/id_rsa.pub
+    cat /vagrant/keys/vhg.pub >> /root/.ssh/authorized_keys
+    chmod 400 -R /root/.ssh
+    sed -i '/^PermitRootLogin.*$/c\PermitRootLogin yes' /etc/ssh/sshd_config 
+    /etc/init.d/ssh restart
+    docker pull rabbitmq:3.5.4-management 
+    docker pull dngroup/adapted-video-frontend
+    docker pull dngroup/adapted-video-osgi-bundle
+    docker pull dngroup/vhg-adaptation-worker:t-nova
+ 
+    echo "
+	# This file describes the network interfaces available on your system
+	# and how to activate them. For more information, see interfaces(5).
+	
+	source /etc/network/interfaces.d/*
+	
+	# The loopback network interface
+	auto lo
+	iface lo inet loopback
+	
+	# The primary network interface
+	allow-hotplug eth0
+	iface eth0 inet dhcp
+	pre-up sleep 2
+	
+	allow-hotplug eth1
+	iface eth1 inet dhcp
+	
+	allow-hotplug eth2
+	iface eth2 inet dhcp
+	
+	allow-hotplug eth3
+	iface eth3 inet dhcp
+	" > /etc/network/interfaces
+	
+
+  SHELL
+end
