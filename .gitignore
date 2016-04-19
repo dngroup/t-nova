@@ -4,7 +4,11 @@ __pycache__/
 *$py.class
 .idea/
 /vagrant/package.box
-*/.vagrant/*
+.vagrant*
+/vagrant/vm_*
+/vagrant/vm.qcow2
+
+
 # C extensions
 *.so
 ~*
