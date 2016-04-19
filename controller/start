@@ -2,5 +2,6 @@
 
 apt-get update
 apt-get install python-paramiko --yes
-./init
 ln -s /root/t-nova/salt /srv/salt
+./init
+
