@@ -4,3 +4,4 @@ cd /root/
 git clone https://github.com/dngroup/t-nova.git
 cd t-nova/controller
 cp /root/data.json data.json
+./start
