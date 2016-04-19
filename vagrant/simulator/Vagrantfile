@@ -5,40 +5,46 @@
 boxes = [
     {
         :name => "Controleur",
-        :eth1 => "192.168.236.60",
-        :eth2 => "192.168.252.60",
+        :eth1 => "10.1.2.254",
+        :eth2 => "10.1.3.254",
+        :eth3 => "10.1.4.254",
         :mem => "512",
         :cpu => "1",
         :nodetype => "Controleur"
     },
 	{
         :name => "CDN-LB",
-        :eth1 => "192.168.236.70",
-        :eth2 => "192.168.252.70",
+        :eth1 => "10.1.2.2",
+        :eth2 => "10.1.3.2",
+        :eth3 => "10.1.4.2",
+        :eth4 => "10.1.1.2",
         :mem => "1024",
         :cpu => "1",
         :nodetype => "swift_proxy"
     },
     {
         :name => "CDN-1",
-        :eth1 => "192.168.236.71",
-        :eth2 => "192.168.252.71",
+        :eth1 => "10.1.2.4",
+        :eth2 => "10.1.3.4",
+        :eth3 => "10.1.4.4",
         :mem => "1024",
         :cpu => "1",
         :nodetype => "swift_object"
     },
     {
         :name => "CDN-2",
-        :eth1 => "192.168.236.72",
-        :eth2 => "192.168.252.72",
+        :eth1 => "10.1.2.5",
+        :eth2 => "10.1.3.5",
+        :eth3 => "10.1.4.5",
+        :eth4 => "10.1.1.5",
         :mem => "1024",
         :cpu => "1",
         :nodetype => "swift_object"
     },   
 	{
         :name => "VHG",
-        :eth1 => "192.168.236.80",
-        :eth2 => "192.168.252.80",
+        :eth1 => "10.1.2.3",
+        :eth2 => "10.1.3.3",
         :mem => "512",
         :cpu => "1",
         :nodetype => "vhg"
@@ -48,7 +54,7 @@ boxes = [
 
 $controleur = <<CONTROLLER
 
-echo "{"Controller.management":"10.10.2.133","Controller.data_in":"10.10.4.89","VHG.management":"10.10.2.131","VHG.Floating_IP":"10.10.1.253","VHG.data_in":"10.10.4.9","CDN-LB.management":"10.10.2.134","CDN-LB.Floating_IP":"10.10.1.254","CDN-LB.storage":"10.10.3.59","CDN-LB.data_in":"10.10.4.90","CDN-1.management":"10.10.2.132","CDN-1.storage":"10.10.3.57","CDN-1.data_in":"10.10.4.87","CDN-2.management":"10.10.2.135","CDN-2.storage":"10.10.3.58","CDN-2.data_in":"10.10.4.88"}">/root/data.json
+echo "{"Controller.management":"10.1.2.254","Controller.data_in":"10.1.4.1","VHG.management":"10.1.2.3","VHG.Floating_IP":"10.1.1.3","VHG.data_in":"10.1.4.3","CDN-LB.management":"10.1.2.2","CDN-LB.Floating_IP":"10.1.1.2","CDN-LB.storage":"10.1.3.2","CDN-LB.data_in":"10.1.4.2","CDN-1.management":"10.1.2.132","CDN-1.storage":"10.1.3.4","CDN-1.data_in":"10.1.4.4","CDN-2.management":"10.1.25","CDN-2.storage":"10.1.3.5","CDN-2.data_in":"10.1.4.5"}">/root/data.json
 wget https://raw.githubusercontent.com/dngroup/t-nova/master/controller/start /root/start
 chmod 777 /root/start
 pwd
