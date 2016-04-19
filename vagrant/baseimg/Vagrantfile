@@ -66,14 +66,14 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     echo root:toor | /usr/sbin/chpasswd
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https ca-certificates
-    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+    apt-get update
+    apt-get install -y apt-transport-https ca-certificates
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
     echo "deb https://apt.dockerproject.org/repo debian-jessie main" >> /etc/apt/sources.list.d/docker.list
     wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -
-    sed '/saltstack/d' /etc/apt/sources.list
     echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list
-    sudo apt-get install docker-engine=1.10.3-0~jessie salt-minion python python-pip build-essential python-paramiko cloud-init  -y cloud-init
+    apt-get update
+    apt-get install docker-engine=1.10.3-0~jessie salt-minion python python-pip build-essential python-paramiko cloud-init  -y cloud-init
     sed -i.bak 's/^# Example datasource config.*/datasource:\\n   CloudStack:\\n     timeout : 10\\n     max_wait : 10\\n   Ec2:\\n     timeout: 2 # (defaults to 50 seconds)\\n     max_wait: 5 # (defaults to 120 seconds)\\n/' /etc/cloud/cloud.cfg
     pip install docker-py==1.8.0 --upgrade
     mkdir -p /root/.ssh
