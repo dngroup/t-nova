@@ -39,6 +39,7 @@ for (name, ips) in data2.items():
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
     _do(ssh, 'apt-get update')
     _do(ssh, 'apt-get install salt-minion docker-engine=1.10.3-0~jessie --yes')
+    _do(ssh, 'easy_install --upgrade pip')
     _do(ssh, 'pip install docker-py==1.8.0 pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
