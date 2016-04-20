@@ -14,8 +14,8 @@ def _do(ssh, command):
 
 with open("data.json") as f:
     data = json.loads(f.read())
+    
 data2={};
-
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 for (name, ip) in data.items():
@@ -25,6 +25,8 @@ for (name, ip) in data.items():
     except:
         data2[name2[0]]={};
         data2[name2[0]][name2[1]]=ip;
+        
+        
 masterIp = data2["Controller"]["management"]
 ips_json={"ips":data2}
 yml = yaml.safe_dump(ips_json, allow_unicode=True)
@@ -46,7 +48,9 @@ for (name, ips) in data2.items():
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
     # for everbody
-    _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
+  _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
+    for (name, ips) in data2.items():
+		 _do(ssh, "echo "+ips["management"]+"   "+ name +" >> /etc/hosts")s
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
     if (name == "Controller"):
         _do(ssh, 'apt-get install salt-master --yes')
@@ -83,7 +87,7 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     elif (name == "CDN-2"):
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
-        _do(ssh, 'echo "  - woker" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
