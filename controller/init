@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 
+import time
 import subprocess
 import json
 import paramiko
@@ -91,7 +92,8 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
-print "start salt"
+print "start salt (sleep 30s)"
+time.sleep(30)
 ssh.connect("127.0.0.1", username="root")
 _do(ssh, 'salt "CDN-LB" state.highstate')
 _do(ssh, 'salt '*' state.highstate')
