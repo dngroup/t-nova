@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 
-import time
-import subprocess
 import json
 import paramiko
+import subprocess
 import sys
+import time
 import yaml
 
 
@@ -50,48 +50,48 @@ for (name, ips) in data2.items():
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
     # for everbody
-	_do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
-	for (name, ips) in data2.items():
-		_do(ssh, "echo " + ips["management"] + "   " + name + " >> /etc/hosts")
-	_do(ssh, 'echo "roles:" > /etc/salt/grains')
-	if (name == "Controller"):
-		_do(ssh, 'apt-get install salt-master --yes')
-		_do(ssh, 'echo "fileserver_backend:" >> /etc/salt/master')
-		_do(ssh, 'echo "  - roots" >> /etc/salt/master')
-		_do(ssh, 'echo "  - minion" >> /etc/salt/master')
-		_do(ssh, 'echo "  - git" >> /etc/salt/master')
-		_do(ssh, 'echo "" >> /etc/salt/master')
-		_do(ssh, 'echo "file_recv: True" >> /etc/salt/master')
-		_do(ssh, 'echo "auto_accept: True" >> /etc/salt/master')
-		_do(ssh, 'echo "open_mode: True" >> /etc/salt/master')
-		_do(ssh, 'service salt-master restart')
-		_do(ssh, 'mkdir -p /srv/pillar/')
-		_do(ssh, 'echo "mine_functions:" > /srv/pillar/swift.sls')
-		_do(ssh, 'echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls')
-		_do(ssh, 'echo "' + yml + '"  >> /srv/pillar/ips.sls')
-		_do(ssh, 'echo "base:" > /srv/pillar/top.sls')
-		_do(ssh, 'echo "  \'*\':" >> /srv/pillar/top.sls')
-		_do(ssh, 'echo "    - swift" >> /srv/pillar/top.sls')
-		_do(ssh, 'echo "    - ips" >> /srv/pillar/top.sls')
-		print "Finish Controller"
-	elif (name == "VHG"):
-		_do(ssh, 'echo "  - core" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - vhg" >> /etc/salt/grains')
-	elif (name == "CDN-LB"):
-		_do(ssh, 'echo "  - swift_proxy" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - core" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - worker" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - broker" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - frontend" >> /etc/salt/grains')
-	elif (name == "CDN-1"):
-		_do(ssh, 'echo "  - core" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - worker" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
-	elif (name == "CDN-2"):
-		_do(ssh, 'echo "  - core" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - worker" >> /etc/salt/grains')
-		_do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
-	_do(ssh, "service salt-minion restart")
+    _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
+    for (name, ips) in data2.items():
+        _do(ssh, "echo " + ips["management"] + "   " + name + " >> /etc/hosts")
+    _do(ssh, 'echo "roles:" > /etc/salt/grains')
+    if (name == "Controller"):
+        _do(ssh, 'apt-get install salt-master --yes')
+        _do(ssh, 'echo "fileserver_backend:" >> /etc/salt/master')
+        _do(ssh, 'echo "  - roots" >> /etc/salt/master')
+        _do(ssh, 'echo "  - minion" >> /etc/salt/master')
+        _do(ssh, 'echo "  - git" >> /etc/salt/master')
+        _do(ssh, 'echo "" >> /etc/salt/master')
+        _do(ssh, 'echo "file_recv: True" >> /etc/salt/master')
+        _do(ssh, 'echo "auto_accept: True" >> /etc/salt/master')
+        _do(ssh, 'echo "open_mode: True" >> /etc/salt/master')
+        _do(ssh, 'service salt-master restart')
+        _do(ssh, 'mkdir -p /srv/pillar/')
+        _do(ssh, 'echo "mine_functions:" > /srv/pillar/swift.sls')
+        _do(ssh, 'echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls')
+        _do(ssh, 'echo "' + yml + '"  >> /srv/pillar/ips.sls')
+        _do(ssh, 'echo "base:" > /srv/pillar/top.sls')
+        _do(ssh, 'echo "  \'*\':" >> /srv/pillar/top.sls')
+        _do(ssh, 'echo "    - swift" >> /srv/pillar/top.sls')
+        _do(ssh, 'echo "    - ips" >> /srv/pillar/top.sls')
+        print "Finish Controller"
+    elif (name == "VHG"):
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - vhg" >> /etc/salt/grains')
+    elif (name == "CDN-LB"):
+        _do(ssh, 'echo "  - swift_proxy" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - broker" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - frontend" >> /etc/salt/grains')
+    elif (name == "CDN-1"):
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
+    elif (name == "CDN-2"):
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
+    _do(ssh, "service salt-minion restart")
 
 print "start salt (sleep 30s)"
 time.sleep(30)
