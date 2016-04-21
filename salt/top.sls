@@ -31,6 +31,10 @@ base:
     - match: grain
     - core.worker
 
+  'roles:admission':
+    - match: grain
+    - core.admission
+
   'roles:frontend':
     - match: grain
     - core.frontend
