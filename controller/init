@@ -97,6 +97,6 @@ print "start salt (sleep 30s)"
 time.sleep(30)
 ssh.connect("127.0.0.1", username="root")
 _do(ssh, 'salt "CDN-LB" state.highstate')
-_do(ssh, 'salt " * " state.highstate')
+_do(ssh, 'salt "*" state.highstate')
 
 print "Finish complete"
