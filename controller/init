@@ -67,7 +67,7 @@ for (name, ips) in data2.items():
         _do(ssh, 'service salt-master restart')
         _do(ssh, 'mkdir -p /srv/pillar/')
         _do(ssh, 'echo "mine_functions:" > /srv/pillar/swift.sls')
-        _do(ssh, 'echo "  network.ip_addrs: [eth0]"  >> /srv/pillar/swift.sls')
+        _do(ssh, 'echo "  network.ip_addrs: [eth1]"  >> /srv/pillar/swift.sls')
         _do(ssh, 'echo "' + yml + '"  >> /srv/pillar/ips.sls')
         _do(ssh, 'echo "base:" > /srv/pillar/top.sls')
         _do(ssh, 'echo "  \'*\':" >> /srv/pillar/top.sls')
@@ -83,6 +83,7 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - broker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - frontend" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - admission" >> /etc/salt/grains')
     elif (name == "CDN-1"):
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
