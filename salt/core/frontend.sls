@@ -25,7 +25,7 @@ core-frontend:
       - "AMQP_PORT_5672_TCP_ADDR" : "{{ broker_ip }}"
       - "AMQP_PORT_5672_TCP_PORT" : "5672"
       - "STREAMER_URL" : " http://{{ pillar['ips']['CDN-LB']['Floating_IP'] }}:8080/v1/AUTH_admin/"
-      - "SWIFT_URL" : "{{ pillar['ips']['CDN-LB']['data_in'] }}"
+      - "SWIFT_URL" : "http://{{{ pillar['ips']['CDN-LB']['data_in'] }}:8080"
       - "TRANSCOD_PARAM_FILE" : "~/transcodeParam.json"
     - require: 
       - docker: dngroup/adapted-video-frontend
