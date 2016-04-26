@@ -1,6 +1,8 @@
-dngroup/vhg-adaptation-worker:
+dngroup/vhg-adaptation-admission:
   docker.pulled:
+    - name: dngroup/vhg-adaptation-worker
     - tag: t-nova
+
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
 {%- set addrs = salt['mine.get']('roles:broker', minealias,"grain") %}
