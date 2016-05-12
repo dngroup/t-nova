@@ -81,7 +81,6 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - broker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - swift_proxy" >> /etc/salt/grains')
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
-        _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - frontend" >> /etc/salt/grains')
         _do(ssh, 'echo "  - admission" >> /etc/salt/grains')
     elif (name == "CDN-1"):
