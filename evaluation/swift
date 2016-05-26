@@ -1,0 +1,26 @@
+curl -i -X GET -H 'X-Auth-User: admin:admin' -H 'X-Auth-Key: admin' http://10.10.1.169:8080/auth/v1.0 >bla
+export TOKEN=$(cat bla | grep X-Auth-Token  | grep -oP '(?<=X-Auth-Token: )\w+'  | sed 's/\r$//' )
+export STORAGE=$(cat bla | grep X-Storage-Url  | grep -oP '(?<=X-Storage-Url: ).+'  | sed 's/\r$//' )
+echo TOKEN=$TOKEN
+echo STORAGE=$STORAGE
+rm bla
+curl -i -X GET -H "X-Auth-Token: $TOKEN" "$STORAGE"
+curl -i -X POST $STORAGE -H 'X-Account-Meta-Temp-URL-Key: azerty' -H "X-Auth-Token: $TOKEN" -i
+curl -i -X POST $STORAGE -H 'X-Account-Meta-Temp-URL-Key-2: azerty' -H "X-Auth-Token: $TOKEN" -i
+
+curl -i -X PUT $STORAGE/eval/ -H 'X-Container-Read:  .r:*' -H "X-Auth-Token: $TOKEN"  -H "X-Container-Meta-Access-Control-Allow-Origin: *"  -H "X-Container-Meta-Access-Control-Allow-Method: GET" -i
+
+
+TEMP_URL0=$(swift-temp-url PUT 60000 /v1/AUTH_admin/eval/Original azerty)
+TEMP_URL1=$(swift-temp-url PUT 60000 /v1/AUTH_admin/eval/360H264 azerty)
+echo ""
+echo $TEMP_URL0
+echo $TEMP_URL1
+
+
+
+#curl -X PUT "http://10.10.1.249:8080$TEMP_URL" -T ~/Downloads/SampleAudio_0.5mb.mp3
+#export TEMP_URL=$(swift-temp-url GET 6000 /v1/AUTH_admin/my_music/my_song2.mp3 azerty)
+#echo "curl  http://10.10.1.249:8080$TEMP_URL -o ~/Downloads/SampleAudio_0.5mb.mp3.sav"
+#curl  "http://10.10.1.249:8080$TEMP_URL" -o ~/Downloads/SampleAudio_0.5mb.mp3.sav
+

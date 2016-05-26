@@ -18,7 +18,7 @@
           <stringProp name="LoopController.loops">20</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">10</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">200</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">400</stringProp>
         <longProp name="ThreadGroup.start_time">1463042579000</longProp>
         <longProp name="ThreadGroup.end_time">1463042573000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -32,7 +32,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;exchange&quot;: &quot;amq.default&quot;, &quot;routing_key&quot;: &quot;celery&quot;, &quot;properties&quot;: {&quot;content_encoding&quot;: &quot;utf-8&quot;, &quot;content_type&quot;: &quot;application/json&quot;}, &quot;vhost&quot;: &quot;/&quot;, &quot;payload_encoding&quot;: &quot;string&quot;, &quot;payload&quot;: &quot;{\&quot;id\&quot;:\&quot;f56528d1685c6ef1988bda1312484172a84d1f0e\&quot;,\&quot;task\&quot;:\&quot;adaptation.commons.staging_and_admission_workflow\&quot;,\&quot;args\&quot;:[],\&quot;kwargs\&quot;:{\&quot;url\&quot;:\&quot;${SOURCE_FILE}\&quot;,\&quot;qualities\&quot;:[{\&quot;name\&quot;:\&quot;360H264_default\&quot;,\&quot;bitrate\&quot;:500,\&quot;codec\&quot;:\&quot;H264\&quot;,\&quot;height\&quot;:240,\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;},{\&quot;name\&quot;:\&quot;360H265_default\&quot;,\&quot;bitrate\&quot;:1000,\&quot;codec\&quot;:\&quot;H265\&quot;,\&quot;height\&quot;:720,\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;}],\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL0}\&quot;,\&quot;cacheURL\&quot;:\&quot;${RETURN_URL}${RETURN_NAME0}${CACHE_TEMPURL0}\&quot;},\&quot;retries\&quot;:1,\&quot;eta\&quot;:\&quot;2016-04-20T01:28:00Z\&quot;}&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;payload_bytes&quot;:825,&quot;redelivered&quot;:true,&quot;exchange&quot;:&quot;&quot;,&quot;routing_key&quot;:&quot;soft&quot;,&quot;message_count&quot;:3,&quot;properties&quot;:{&quot;content_encoding&quot;:&quot;utf-8&quot;,&quot;content_type&quot;:&quot;application/json&quot;},&quot;payload&quot;:&quot;{\&quot;retries\&quot;: 1, \&quot;task\&quot;: \&quot;adaptation.commons.encode_workflow\&quot;, \&quot;returnURL\&quot;: \&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;, \&quot;eta\&quot;: \&quot;2016-04-20T01:28:00Z\&quot;, \&quot;kwargs\&quot;: {\&quot;url\&quot;: \&quot;${SOURCE_FILE}\&quot;, \&quot;qualities\&quot;: {\&quot;quality\&quot;: [{\&quot;bitrate\&quot;: 1000, \&quot;codec\&quot;: \&quot;libx264\&quot;, \&quot;returnURL\&quot;: \&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;, \&quot;name\&quot;: \&quot;360H264_default\&quot;, \&quot;height\&quot;: 720}]}}, \&quot;id\&quot;: \&quot;f56528d1685c6ef1988bda1312484172a84d1f0e\&quot;}&quot;,&quot;payload_encoding&quot;:&quot;string&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -74,7 +74,7 @@
             <intProp name="calcMode">0</intProp>
             <doubleProp>
               <name>throughput</name>
-              <value>6.0</value>
+              <value>3.0</value>
               <savedValue>0.0</savedValue>
             </doubleProp>
           </ConstantThroughputTimer>
@@ -83,52 +83,17 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="SOURCE_FILE" elementType="Argument">
                 <stringProp name="Argument.name">SOURCE_FILE</stringProp>
-                <stringProp name="Argument.value">http://www.labri.fr/perso/dbourass/bbb3.mp4</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_URL" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_URL</stringProp>
-                <stringProp name="Argument.value">http://10.10.3.61:8080/v1/AUTH_admin/eval/</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_NAME0" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_NAME0</stringProp>
-                <stringProp name="Argument.value">Original</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_NAME1" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_NAME1</stringProp>
-                <stringProp name="Argument.value">360H264</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_NAME2" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_NAME2</stringProp>
-                <stringProp name="Argument.value">360H264</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_TEMPURL0" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_TEMPURL0</stringProp>
-                <stringProp name="Argument.value">/v1/AUTH_admin/eval/Original?temp_url_sig=67fa8b448c10ee4696f50243ee4d3655ad6cb5b4&amp;temp_url_expires=1464223179 </stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_TEMPURL1" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_TEMPURL1</stringProp>
-                <stringProp name="Argument.value">/v1/AUTH_admin/eval/360H264?temp_url_sig=baefbeb288eda1cb4594e6d1e79a9f5d499f8c4a&amp;temp_url_expires=1464223179 </stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="RETURN_TEMPURL2" elementType="Argument">
-                <stringProp name="Argument.name">RETURN_TEMPURL2</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="CACHE_TEMPURL0" elementType="Argument">
-                <stringProp name="Argument.name">CACHE_TEMPURL0</stringProp>
-                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.value">http://10.10.3.61:8080/v1/AUTH_admin/eval/Original</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="BASE_URL" elementType="Argument">
                 <stringProp name="Argument.name">BASE_URL</stringProp>
                 <stringProp name="Argument.value">http://10.10.3.61:8080</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="RETURN_TEMPURL1" elementType="Argument">
+                <stringProp name="Argument.name">RETURN_TEMPURL1</stringProp>
+                <stringProp name="Argument.value">/v1/AUTH_admin/eval/360H264?temp_url_sig=baefbeb288eda1cb4594e6d1e79a9f5d499f8c4a&amp;temp_url_expires=1464223179 </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
