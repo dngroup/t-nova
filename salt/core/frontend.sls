@@ -1,7 +1,7 @@
 dngroup/adapted-video-frontend:
   docker.pulled:
     - tag: latest
-
+    - name: dngroup/adapted-video-frontend
 
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
@@ -16,7 +16,7 @@ dngroup/adapted-video-frontend:
 
 core-frontend:
   docker.running:
-    - image:  dngroup/adapted-video-frontend
+    - image: dngroup/adapted-video-frontend
     - ports:
       - "8080/tcp":
           HostIp: "0.0.0.0"
