@@ -21,6 +21,8 @@ core-frontend:
       - "8080/tcp":
           HostIp: "0.0.0.0"
           HostPort: "5000"  
+    - volumes:
+      - "/root:/root:ro" 
     - environment:
       - "AMQP_PORT_5672_TCP_ADDR" : "{{ broker_ip }}"
       - "AMQP_PORT_5672_TCP_PORT" : "5672"
