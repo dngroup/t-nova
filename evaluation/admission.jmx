@@ -18,7 +18,7 @@
           <stringProp name="LoopController.loops">20</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">10</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">200</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">400</stringProp>
         <longProp name="ThreadGroup.start_time">1463042579000</longProp>
         <longProp name="ThreadGroup.end_time">1463042573000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -32,7 +32,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;exchange&quot;: &quot;amq.default&quot;, &quot;routing_key&quot;: &quot;celery&quot;, &quot;properties&quot;: {&quot;content_encoding&quot;: &quot;utf-8&quot;, &quot;content_type&quot;: &quot;application/json&quot;}, &quot;vhost&quot;: &quot;/&quot;, &quot;payload_encoding&quot;: &quot;string&quot;, &quot;payload&quot;: &quot;{\&quot;id\&quot;:\&quot;f56528d1685c6ef1988bda1312484172a84d1f0e\&quot;,\&quot;task\&quot;:\&quot;adaptation.commons.staging_and_admission_workflow\&quot;,\&quot;args\&quot;:[],\&quot;kwargs\&quot;:{\&quot;url\&quot;:\&quot;${SOURCE_FILE}\&quot;,\&quot;qualities\&quot;:[{\&quot;name\&quot;:\&quot;360H264_default\&quot;,\&quot;bitrate\&quot;:500,\&quot;codec\&quot;:\&quot;H264\&quot;,\&quot;height\&quot;:240,\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;},{\&quot;name\&quot;:\&quot;360H265_default\&quot;,\&quot;bitrate\&quot;:1000,\&quot;codec\&quot;:\&quot;H265\&quot;,\&quot;height\&quot;:720,\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;}],\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL0}\&quot;,\&quot;cacheURL\&quot;:\&quot;${RETURN_URL}${RETURN_NAME0}${CACHE_TEMPURL0}\&quot;},\&quot;retries\&quot;:1,\&quot;eta\&quot;:\&quot;2016-04-20T01:28:00Z\&quot;}&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;exchange&quot;: &quot;amq.default&quot;, &quot;routing_key&quot;: &quot;celery&quot;, &quot;properties&quot;: {&quot;content_encoding&quot;: &quot;utf-8&quot;, &quot;content_type&quot;: &quot;application/json&quot;}, &quot;vhost&quot;: &quot;/&quot;, &quot;payload_encoding&quot;: &quot;string&quot;, &quot;payload&quot;: &quot;{\&quot;id\&quot;:\&quot;f56528d1685c6ef1988bda1312484172a84d1f0e\&quot;,\&quot;task\&quot;:\&quot;adaptation.commons.staging_and_admission_workflow\&quot;,\&quot;args\&quot;:[],\&quot;kwargs\&quot;:{\&quot;url\&quot;:\&quot;${SOURCE_FILE}\&quot;,\&quot;qualities\&quot;:[{\&quot;name\&quot;:\&quot;360H264_default\&quot;,\&quot;bitrate\&quot;:500,\&quot;codec\&quot;:\&quot;H264\&quot;,\&quot;height\&quot;:240,\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL1}\&quot;}],\&quot;returnURL\&quot;:\&quot;${BASE_URL}${RETURN_TEMPURL0}\&quot;,\&quot;cacheURL\&quot;:\&quot;${RETURN_URL}${RETURN_NAME0}${CACHE_TEMPURL0}\&quot;},\&quot;retries\&quot;:1,\&quot;eta\&quot;:\&quot;2016-04-20T01:28:00Z\&quot;}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -74,7 +74,7 @@
             <intProp name="calcMode">0</intProp>
             <doubleProp>
               <name>throughput</name>
-              <value>6.0</value>
+              <value>3.0</value>
               <savedValue>0.0</savedValue>
             </doubleProp>
           </ConstantThroughputTimer>
@@ -83,7 +83,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="SOURCE_FILE" elementType="Argument">
                 <stringProp name="Argument.name">SOURCE_FILE</stringProp>
-                <stringProp name="Argument.value">http://www.labri.fr/perso/dbourass/bbb3.mp4</stringProp>
+                <stringProp name="Argument.value">http://mddash.net:8080/bbb3.mp4</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="RETURN_URL" elementType="Argument">
