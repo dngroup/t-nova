@@ -2,6 +2,9 @@ base:
   '*':
    - hostsfile
     
+  'roles:broker':
+    - match: grain
+    - core.broker
     
   'roles:swift_proxy':
     - match: grain
@@ -23,13 +26,13 @@ base:
     - match: grain
     - core
     
-  'roles:broker':
-    - match: grain
-    - core.broker
-    
   'roles:worker':
     - match: grain
     - core.worker
+
+  'roles:admission':
+    - match: grain
+    - core.admission
 
   'roles:frontend':
     - match: grain

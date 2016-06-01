@@ -3,5 +3,6 @@ losetup /dev/loop2 /mnt/object-volume1
 mkfs.xfs -i size=1024 /dev/loop2
 echo "/dev/loop2 /srv/node/loop2 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 mount -a
+sed 's/.loop2/#&/'
 
 
