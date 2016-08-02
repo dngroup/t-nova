@@ -4,7 +4,7 @@
 "Frontend.Externe":"192.124.68.4",
 "Worker.management":"192.57.128.6",
 "vCDN.data_in":"192.189.8.2",
-"CDN-LB.Floating_IP":"10.10.1.141",
+"Frontend.Floating_IP":"10.10.1.141",
 "Controller.Externe":"192.124.68.2",
 "Frontend.management":"192.57.128.5",
 "vCDN.management":"192.57.128.4",
