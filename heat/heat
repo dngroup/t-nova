@@ -1,0 +1,128 @@
+description: 2016-12-05-15-10-vhg
+heat_template_version: '2014-10-16'
+outputs:
+  CPaq59#floating_ip:
+    description: CPaq59 Floating IP
+    value:
+      get_attr: [2016-12-05-15-10-vhg_15, floating_ip_address]
+  CPknhl#floating_ip:
+    description: CPknhl Floating IP
+    value:
+      get_attr: [2016-12-05-15-10-vhg_4, floating_ip_address]
+  CPl40d#floating_ip:
+    description: CPl40d Floating IP
+    value:
+      get_attr: [2016-12-05-15-10-vhg_12, floating_ip_address]
+  controller:
+    description: ''
+    value:
+      get_attr: [vdu0, networks, net0, 0]
+  vdu0:
+    description: ''
+    value:
+      get_attr: [vdu0, networks, net0, 0]
+  vdu0#id:
+    description: vdu0 ID
+    value: {get_resource: vdu0}
+  vdu1#id:
+    description: vdu1 ID
+    value: {get_resource: vdu1}
+resources:
+  2016-12-05-15-10-vhg_1:
+    properties: {container_format: bare, disk_format: qcow2, location: 'http://10.10.1.167:8080/NFS/files/vhg.qcow2',name: 2016-12-05-15-10-vhg_1}
+    type: OS::Glance::Image
+  2016-12-05-15-10-vhg_10:
+    properties: {disk: 11, ram: 2048, vcpus: 1}
+    type: OS::Nova::Flavor
+  2016-12-05-15-10-vhg_12:
+    properties: {floating_network: public}
+    type: OS::Neutron::FloatingIP
+  2016-12-05-15-10-vhg_13:
+    properties:
+      floatingip_id: {get_resource: 2016-12-05-15-10-vhg_12}
+      port_id: {get_resource: CPl40d}
+    type: OS::Neutron::FloatingIPAssociation
+  2016-12-05-15-10-vhg_15:
+    properties: {floating_network: public}
+    type: OS::Neutron::FloatingIP
+  2016-12-05-15-10-vhg_16:
+    properties:
+      floatingip_id: {get_resource: 2016-12-05-15-10-vhg_15}
+      port_id: {get_resource: CPaq59}
+    type: OS::Neutron::FloatingIPAssociation
+  2016-12-05-15-10-vhg_2:
+    properties: {disk: 11, ram: 2048, vcpus: 1}
+    type: OS::Nova::Flavor
+  2016-12-05-15-10-vhg_4:
+    properties: {floating_network: public}
+    type: OS::Neutron::FloatingIP
+  2016-12-05-15-10-vhg_5:
+    properties:
+      floatingip_id: {get_resource: 2016-12-05-15-10-vhg_4}
+      port_id: {get_resource: CPknhl}
+    type: OS::Neutron::FloatingIPAssociation
+  2016-12-05-15-10-vhg_9:
+    properties: {container_format: bare, disk_format: qcow2, location: 'http://10.10.1.167:8080/NFS/files/vhg.qcow2',
+      name: 2016-12-05-15-10-vhg_9}
+    type: OS::Glance::Image
+  CPaq59:
+    properties:
+      network: 7457c226-b4fc-4f70-b413-3492370532b5
+      security_groups: [38fbfefa-ed8e-46b0-96e0-c391189a1b47]
+    type: OS::Neutron::Port
+  CPknhl:
+    properties:
+      network: 3bc2fc3c-d3ba-4ed0-8a52-f3393d407060
+      security_groups: [38fbfefa-ed8e-46b0-96e0-c391189a1b47]
+    type: OS::Neutron::Port
+  CPl40d:
+    properties:
+      network: 3bc2fc3c-d3ba-4ed0-8a52-f3393d407060
+      security_groups: [38fbfefa-ed8e-46b0-96e0-c391189a1b47]
+    type: OS::Neutron::Port
+  vdu0:
+    properties:
+      flavor: {get_resource: 2016-12-05-15-10-vhg_2}
+      image: {get_resource: 2016-12-05-15-10-vhg_1}
+      networks:
+      - port: {get_resource: CPknhl}
+      user_data:
+        str_replace:
+          params:
+            vdu0net0:
+              get_attr: [CPl40d, floating_ip, 0, ip_address]
+            vdu0net1:
+              get_attr: [CPaq59, floating_ip, 0, ip_address]
+            vdu1net0:
+              get_attr: [CPl40d, fixed_ips, 0, ip_address]
+            vdu1net1:
+              get_attr: [CPaq59, fixed_ips, 0, ip_address]
+              
+          template: '#!/usr/bin/env bash
+
+            echo ''echo $(date) > /root/snitch.start && echo $1 > start.txt''> /root/start;
+            chmod +x /root/start
+
+            echo ''echo $(date) > /root/snitch.stop && echo $1 > end.txt'' > /root/stop;
+            chmod +x /root/stop
+            
+            echo vdu0net0 > /root/lala00
+            
+            echo vdu1net0 > /root/lala10
+            
+            echo vdu1net1 > /root/lala11
+            
+            echo vdu0net1 > /root/lala01
+
+            '
+      user_data_format: RAW
+    type: OS::Nova::Server
+  vdu1:
+    properties:
+      flavor: {get_resource: 2016-12-05-15-10-vhg_10}
+      image: {get_resource: 2016-12-05-15-10-vhg_9}
+      networks:
+      - port: {get_resource: CPl40d}
+      - port: {get_resource: CPaq59}
+      user_data_format: RAW
+    type: OS::Nova::Server

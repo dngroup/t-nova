@@ -1,0 +1,35 @@
+#!/bin/sh
+# This script sends metrics to T-NOVA VIM monitoring backend.
+# Current requirements are curl and sed
+
+monitoring_url='http://emonitoring.sisyphus.mnl:8086/'
+monitoring_db='statsdb'
+
+# Get the instance UUID via OpenStack metadata service
+# 1. Check /etc/collectd/instance_uuid
+# 2. Check /tmp/instance_uuid
+# 3. Try to get it and put it to /tmp/instance_uuid before checking
+instance_uuid () {
+  if [ -e "/etc/collectd/instance_uuid" ]; then
+    cat /etc/collectd/instance_uuid
+  elif [ -e "/tmp/instance_uuid" ]; then
+    cat /tmp/instance_uuid
+  else
+    touch /tmp/instance_uuid
+    echo "$(curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*"uuid": "//; s/".*//')" > /tmp/instance_uuid
+    cat /tmp/instance_uuid
+  fi
+}
+
+if [ $# -lt 2 ]; then
+  echo "tnova_send_metric: too few arguments" >&2
+  return 1
+fi
+
+if [ $# -ge 3 ]; then
+  echo "tnova_send_metric: too many arguments" >&2
+  return 1
+fi
+
+curl -s -i -XPOST $monitoring_url'write?db='$monitoring_db \
+  --data-binary "$1,host=$(instance_uuid) value=$2" > /dev/null

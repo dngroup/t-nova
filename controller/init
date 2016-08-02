@@ -2,6 +2,8 @@
 
 
 import json
+
+import scp as SCPClient
 import paramiko
 import subprocess
 import sys
