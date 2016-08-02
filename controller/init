@@ -57,7 +57,7 @@ for (name, ips) in data2.items():
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
 
-    _do(ssh, 'chmod +x tnova_send_metric')
+    _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
     _do(ssh, 'echo  "*/2 *    * * *   root    tnova_send_metric test 2" |  crontab ')
 
     # for everbody
