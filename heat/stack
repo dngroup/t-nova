@@ -20,18 +20,21 @@ parameters:
 resources:
   floating_ip1:
     properties:
+      port_security_enabled: false
       floating_network_id: {get_param: public_net}
       port_id: {get_resource: port1}
     type: OS::Neutron::FloatingIP
-    
+
   floating_ip2:
     properties:
+      port_security_enabled: false
       floating_network_id: {get_param: public_net}
       port_id: {get_resource: port2}
     type: OS::Neutron::FloatingIP
-    
+
   floating_ip3:
     properties:
+      port_security_enabled: false
       floating_network_id: {get_param: public_net}
       port_id: {get_resource: port3}
     type: OS::Neutron::FloatingIP
@@ -99,6 +102,7 @@ resources:
 
   port1:
     properties:
+      port_security_enabled: false
       fixed_ips:
       - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
@@ -106,6 +110,7 @@ resources:
 
   port2:
     properties:
+      port_security_enabled: false
       fixed_ips:
       - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
@@ -113,6 +118,7 @@ resources:
 
   port3:
     properties:
+      port_security_enabled: false
       fixed_ips:
       - subnet_id: {get_param: management_subnet}
       network_id: {get_param: management_net}
