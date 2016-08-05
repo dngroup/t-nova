@@ -15,7 +15,7 @@ collectd-core:
   file:
     - managed
     - source: salt://monitoring/file/update_uuid.sh
-    - name: /etc/salt/update_uuid.sh
+    - name: /var/salt/update_uuid.sh
     - makedirs: True
     - user: root
     - group: root
