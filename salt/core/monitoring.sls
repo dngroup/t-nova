@@ -1,12 +1,9 @@
+{%- set uuid= salt['cmd.run']("curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*\"uuid\": \"//; s/\".*//'") -%}
+
+
 dngroup/monitoring-t-nova:
   docker.pulled:
     - tag: latest
-
-
-
-
-
-{%- set uuid= salt['cmd.run']("curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*\"uuid\": \"//; s/\".*//'") -%}
 
 
 monitoring-t-nova:
