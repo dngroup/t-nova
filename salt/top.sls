@@ -1,6 +1,7 @@
 base:
   '*':
    - hostsfile
+   - monitoring
     
   'roles:broker':
     - match: grain
@@ -41,3 +42,7 @@ base:
   'roles:vhg':
     - match: grain
     - core.vhg
+
+  'roles:controller':
+    - match: grain
+    - core.monitoring
