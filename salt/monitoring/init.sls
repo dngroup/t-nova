@@ -23,4 +23,4 @@ collectd-core:
   cmd:
     - run
     - require:
-      - pkg: collectd
+      - pkg: collectd-core
