@@ -1,4 +1,4 @@
-collectd:
+collectd-core:
   pkg:
     - installed
   file:
@@ -15,7 +15,7 @@ collectd:
   file:
     - managed
     - source: salt://monitoring/file/update_uuid.sh
-    - name: /etc/collectd/update_uuid.sh
+    - name: /etc/salt/update_uuid.sh
     - makedirs: True
     - user: root
     - group: root
