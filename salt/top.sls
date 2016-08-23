@@ -46,4 +46,4 @@ base:
   'roles:controller':
     - match: grain
     - core.workermonitoring
-    - core.admissonmonitoring
+    - core.admissionmonitoring

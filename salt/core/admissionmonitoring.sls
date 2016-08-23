@@ -6,7 +6,7 @@ dngroup/monitoring-t-nova:
     - tag: latest
 
 
-monitoring-t-nova:
+monitoring-admission-t-nova:
   docker.running:
     - image:  dngroup/monitoring-t-nova
     - environment:
