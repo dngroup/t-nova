@@ -12,5 +12,7 @@ monitoring-t-nova:
     - environment:
       - "UUID" : "{{ uuid }}"
       - "RABBITMQ" : "{{ pillar['ips']['Frontend']['management'] }}"
+      - "QUEUE" : "soft"
+      - "METRICNAME" : "worker"
     - require:
       - docker: dngroup/monitoring-t-nova
