@@ -6,7 +6,6 @@ dngroup/monitoring-admission-t-nova:
     - tag: latest
     - name:  dngroup/monitoring-t-nova
 
-
 monitoring-admission-t-nova:
   docker.running:
     - image:  dngroup/monitoring-t-nova
@@ -16,4 +15,4 @@ monitoring-admission-t-nova:
       - "QUEUE" : "celery"
       - "METRICNAME" : "admission"
     - require:
-      - docker: dngroup/monitoring-t-nova
+      - docker: dngroup/monitoring-admission-t-nova
