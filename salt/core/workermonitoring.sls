@@ -4,7 +4,7 @@
 dngroup/monitoring-worker-t-nova:
   docker.pulled:
     - tag: latest
-    - image:  dngroup/monitoring-t-nova
+    - name:  dngroup/monitoring-t-nova
 
 monitoring-worker-t-nova:
   docker.running:

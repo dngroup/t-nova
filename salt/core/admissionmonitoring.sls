@@ -4,7 +4,7 @@
 dngroup/monitoring-admission-t-nova:
   docker.pulled:
     - tag: latest
-    - image:  dngroup/monitoring-t-nova
+    - name:  dngroup/monitoring-t-nova
 
 
 monitoring-admission-t-nova:
