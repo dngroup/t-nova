@@ -42,7 +42,7 @@ def scalling(s):
     print name, " ", ips, " connect to ", ips["management"]
     ssh.connect(ips["management"], username="root")
     scp = SCPClient(ssh.get_transport())
-    scp.put("tnova_send_metric", "/usr/local/bin/tnova_send_metric")
+    scp.put("../../tnova_send_metric", "/usr/local/bin/tnova_send_metric")
 
     _do(ssh, 'service salt-minion stop')
     _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
@@ -73,8 +73,7 @@ def scalling(s):
     _do(ssh, "salt '%s' state.highstate" % name)
 
 
-
-    _do(ssh, 'salt "Controler" state.sls storage.scaling' % name)
+    _do(ssh, 'salt "Frontend" state.sls storage.scaling')
     print "Finish complete"
 
 
