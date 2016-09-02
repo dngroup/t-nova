@@ -29,7 +29,8 @@ base:
     
   'roles:worker':
     - match: grain
-    - core.worker
+#    - core.worker
+    - worker
 
   'roles:admission':
     - match: grain

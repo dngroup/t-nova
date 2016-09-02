@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+import json
+import paramiko
+import sys
+import time
+import yaml
+import argparse
+
+from scp import SCPClient
+
+
+def _do(ssh, command):
+    stdin, stdout, stderr = ssh.exec_command(command)
+    print stdout.read()
+    sys.stderr.write(stderr.read())
+
+
+def scalling(s):
+    with open(s) as f:
+        data = json.loads(f.read())
+
+    data2 = {};
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    for (name, ip) in data.items():
+        name2 = name.split("-");
+        try:
+            data2[name2[0]][name2[1]] = ip;
+        except:
+            data2[name2[0]] = {};
+            data2[name2[0]][name2[1]] = ip;
+
+    masterIp = data2["Controller"]["management"]
+    ips_json = {"ips": data2}
+    yml = yaml.safe_dump(ips_json, allow_unicode=True)
+    print yml
+
+    name = data.items()[0][0].split("-")[0]
+    ips = data2[name]
+
+    print name, " ", ips, " connect to ", ips["management"]
+    ssh.connect(ips["management"], username="root")
+    scp = SCPClient(ssh.get_transport())
+    scp.put("../../tnova_send_metric", "/usr/local/bin/tnova_send_metric")
+
+    _do(ssh, 'service salt-minion stop')
+    _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
+    _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
+    _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
+    _do(ssh, 'apt-get update')
+    _do(ssh, 'apt-get install salt-minion docker-engine --yes')
+    _do(ssh, 'easy_install --upgrade pip')
+    _do(ssh, 'pip install docker-py pip --upgrade')
+    _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
+    _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
+    _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
+    _do(ssh, '/etc/init.d/hostname.sh start')
+    _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
+    # for everbody
+    _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
+    _do(ssh, 'echo "roles:" > /etc/salt/grains')
+    _do(ssh, 'echo "  - core" >> /etc/salt/grains')
+    # _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
+    _do(ssh, "service salt-minion restart")
+
+    print "start salt (sleep 30s)"
+    time.sleep(30)
+    ssh.connect("127.0.0.1", username="root")
+    _do(ssh, "salt '%s' state.highstate" % name)
+    _do(ssh, "salt '%s' state.sls " % name)
+    print "Finish complete"
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', "-f", type=str, required=True)
+    args = parser.parse_args()
+    scalling(args.file)

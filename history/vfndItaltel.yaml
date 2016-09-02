@@ -1,0 +1,534 @@
+billing_model:
+  model: PAYG
+  period: P1D
+  price:
+    max_per_period: 1
+    min_per_period: 1
+    setup: 1
+    unit: EUR
+created_at: '2016-08-31T13:56:45Z'
+deployment_flavours:
+- assurance_parameters:
+  - formula: cpu_util LE 80
+    id: cpu_util
+    penalty:
+      expression: 1
+      type: Discount
+      unit: '%'
+      validity: P1D
+    rel_id: param0
+    unit: '%'
+    value: 80
+    violation:
+    - breaches_count: 2
+      interval: 3600
+  constraint: ''
+  flavour_key: gold
+  id: flavor0
+  vdu_reference:
+  - vdu0
+  - vdu1
+  vlink_reference:
+  - vl0
+  - vl1
+  - vl2
+  - vl3
+  - vl4
+  - vl5
+  - vl6
+description: vSBC-desciption
+descriptor_version: '1'
+id: 2379
+modified_at: '2016-08-31T13:56:45Z'
+name: vSBC-MLE
+provider: italtel
+provider_id: 11
+release: T-NOVA
+trade: false
+type: vSBC
+vdu:
+- alias: OAM_VSBC
+  bootstrap_script: "#!/bin/bash\nPID_DHCLIENT=`ps axf | grep dhclient | grep -v grep\
+    \ | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT ]\nthen\n  kill -9 $PID_DHCLIENT\n\
+    fi\nrm -f /var/lib/dhclient/dhclient.leases\ndhclient eth0\nwhile [ `ls -l /var/lib/dhclient/dhclient.leases\
+    \ | awk '{print $5}'` -lt 100 ]\ndo\n  sleep 1\ndone\nsleep 10\nPID_DHCLIENT=`ps\
+    \ axf | grep dhclient | grep -v grep | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT\
+    \ ]\nthen\n  kill -9 $PID_DHCLIENT\nfi\nlinea=`grep -n \"eth0\" /var/lib/dhclient/dhclient.leases\
+    \ | awk ' { print $1 } ' | tr -d \":\" `\nlet linea+=1\nmng_ip=`head -n $linea\
+    \ /var/lib/dhclient/dhclient.leases | tail -1 | awk ' { print $2 } ' | tr -d \"\
+    ;\" `\necho \"IP OAM : $mng_ip\" > /etc/result_cloud_init\nmng_ip_par=$mng_ip\n\
+    MIB_PATH=/usr/local/etc/\nPATH_XML=/e/GoAhead/xmlconfEM\nXML_UPDATE=/usr/local/bin/CI_xml_update\n\
+    MIB_TAG=ITL-SR-MIB.tag\nMIB_XML=ITL-SR-MIB.xml.new\nOAMPATH=/d/5/39\nPATHWILDFLY=wildfly-8.2.0.Final/standalone/configuration/reload_data\n\
+    OM_MIB_XML=$OAMPATH/$PATHWILDFLY/atcaplatc_itl-bpcmngr_1_mibimage.xml\ncp -f $MIB_PATH/$MIB_TAG\
+    \ $MIB_PATH/$MIB_XML\nif [ $? == 1 ]; then\n  logger \"RUN_CHANGE_HTTPIP: ERROR\
+    \ cp -f $MIB_PATH/$MIB_TAG $MIB_PATH/$MIB_XML\"\n  exit 121\nfi\nMNG_FIP=$mng_ip_par/28\n\
+    MNG_GW=172.22.48.33\nlogger \"RUN_CHANGE_HTTPIP: Started with $mng_ip_par/27 172.22.48.33\"\
+    \nRET=$($XML_UPDATE $MIB_PATH/$MIB_XML $MNG_FIP $MNG_GW)\nif [ $? == 1 ]; then\n\
+    \  logger \"RUN_CHANGE_HTTPIP: ERROR Invalid XML UPDATE FAILED \"\n  exit 1\n\
+    fi\ncp -f $PATH_XML/ITL-SR-MIB.xml $PATH_XML/ITL-SR-MIB.xml.$$\nif [ $? == 1 ];\
+    \ then\n  logger \"RUN_CHANGE_HTTPIP: ERROR cp -f $PATH_XML/ITL-SR-MIB.xml $PATH_XML/ITL-SR-MIB.xml.$$\"\
+    \n  exit 1\nfi\ncp -f $MIB_PATH/$MIB_XML $PATH_XML/ITL-SR-MIB.xml\nif [ $? ==\
+    \ 1 ]; then\n  logger \"RUN_CHANGE_HTTPIP: ERROR cp -f $MIB_PATH/$MIB_XML $PATH_XML/ITL-SR-MIB.xml\"\
+    \n  exit 1\nfi\nlogger \"RUN_CHANGE_HTTPIP: Finished with mng_ip_par mng_gw_par\"\
+    \ncp -f $PATH_XML/ITL-SR-MIB.xml $OM_MIB_XML\nsed -i \"s/\\\"ATCA\\\"/\\\"ATCA\\\
+    \" xmlns=\\\"http:\\/\\/italtel.com\\/datamodeldefinition\\/p16\\/mibgen\\\"/\"\
+    \ $OM_MIB_XML\ncp /var/lib/cloud/data/instance-id /etc/instance-id\nsed -i s/id_instance_number/`cat\
+    \ /etc/instance-id`/g  /etc/collectd.conf\nsed -i s/ip_oem_instance/$mng_ip_par/g\
+    \  /etc/collectd.conf                                    \necho \"wc_notify --data-binary\
+    \ '{\\\"status\\\": \\\"SUCCESS\\\"}'\" > /home/Italtel/wcnotify_temp\nnumatt=1\n\
+    stringatotale=\"\"\nfor attributo in `cat /home/Italtel/wcnotify_temp`\ndo\n \
+    \  case $numatt in\n       6 | 9 | 12 ) partestr=\"'$attributo\" ;;\n       7\
+    \ | 10 | 13 ) partestr=\"$attributo'\" ;;\n       *)            partestr=\"$attributo\"\
+    \ ;;\n   esac\n   let numatt+=1\n   stringatotale=\"$stringatotale $partestr\"\
+    \ndone\nifconfig eth0 mtu 1500\nifconfig eth1 mtu 1400\nifconfig eth2 mtu 1400\n\
+    ifconfig eth3 mtu 1400\nifconfig eth4 mtu 1400\n/usr/local/bin/clear_obs_files\n\
+    echo \"sleep 180\" > /home/Italtel/wcnotify_rit\ncat /usr/local/bin/check_SU_and_RL.sh\
+    \ >> /home/Italtel/wcnotify_rit\ncat /home/Italtel/wcnotify_temp >> /home/Italtel/wcnotify_rit\n\
+    chmod +x /home/Italtel/wcnotify_rit\n/home/Italtel/wcnotify_rit &"
+  connection_points:
+  - id: CPckg7
+    vlink_ref: vl0
+  - id: CP7acb
+    vlink_ref: vl1
+  - id: CPbqmc
+    vlink_ref: vl2
+  - id: CP1wkr
+    vlink_ref: vl3
+  - id: CPac4r
+    vlink_ref: vl4
+  controller: true
+  id: vdu0
+  monitoring_parameters:
+  - desc: CPU Idle
+    metric: cpuidle
+    unit: '%'
+  - desc: CPU Utilization
+    metric: cpu_util
+    unit: '%'
+  - desc: Free Storage
+    metric: fsfree
+    unit: GB
+  - desc: Free Memory
+    metric: memfree
+    unit: MB
+  - desc: Network Incoming
+    metric: network_incoming
+    unit: Mbps
+  - desc: Network Outgoing
+    metric: network_outgoing
+    unit: Mbps
+  - desc: Load Average (1 Minute)
+    metric: load_shortterm
+    unit: '%'
+  - desc: Load Average (5 Minutes)
+    metric: load_midterm
+    unit: '%'
+  - desc: Load Average (15 Minutes)
+    metric: load_longterm
+    unit: '%'
+  - desc: Blocked Processes
+    metric: processes_blocked
+    unit: INT
+  - desc: Paging Processes
+    metric: processes_paging
+    unit: INT
+  - desc: Running Processes
+    metric: processes_running
+    unit: INT
+  - desc: Sleeping Processes
+    metric: processes_sleeping
+    unit: INT
+  - desc: Stopped Processes
+    metric: processes_stopped
+    unit: INT
+  - desc: Zombie Processes
+    metric: processes_zombie
+    unit: INT
+  monitoring_parameters_specific:
+  - desc: Total SIP Sessions
+    metric: total_sip_sessions
+    unit: INT
+  - desc: RTP pack IN
+    metric: rtp_pack_in
+    unit: INT
+  - desc: RTP pack OUT
+    metric: rtp_pack_out
+    unit: INT
+  - desc: RTP pack in byte IN
+    metric: rtp_pack_in_byte
+    unit: Byte
+  - desc: RTP pack in byte OUT
+    metric: rtp_pack_out_byte
+    unit: Byte
+  - desc: RTP frame loss
+    metric: rtp_frame_loss
+    unit: INT
+  - desc: Average Latency (RTP delay)
+    metric: average_latency
+    unit: Msec
+  - desc: Max Latency (RTP delay)
+    metric: max_latency
+    unit: Msec
+  - desc: Average Interarrival Jitter
+    metric: average_interarrival_jitter
+    unit: Msec
+  - desc: Max Interarrival Jitter
+    metric: max_interarrival_jitter
+    unit: Msec
+  - desc: Number of IN Transcoding
+    metric: number_of_in_transcoding
+    unit: INT
+  - desc: Number of OUT Transcoding
+    metric: number_of_out_transcoding
+    unit: INT
+  - desc: Number of OUT Transrating
+    metric: number_of_in_transrating
+    unit: INT
+  - desc: Number of OUT Transrating
+    metric: number_of_out_transrating
+    unit: INT
+  networking_resources: ''
+  resource_requirements:
+    cpu_support_accelerator: AES-NI
+    data_processing_acceleration_library: ''
+    hypervisor_parameters:
+      type: QEMU-KVM
+      version: 10002|12001|2.6.32-358.el6.x86_64
+    memory: 16
+    memory_parameters:
+      large_pages_required: false
+      numa_allocation_policy: ''
+    memory_unit: GB
+    network_interface_bandwidth: ''
+    network_interface_bandwidth_unit: ''
+    network_interface_card_capabilities:
+      SR-IOV: true
+      mirroring: false
+    platform_pcie_parameters:
+      SR-IOV: true
+      device_pass_through: true
+    storage:
+      persistence: false
+      size: 80
+      size_unit: GB
+    vcpus: 6
+    vswitch_capabilities:
+      overlay_tunnel: GRE
+      type: ovs
+      version: '2.0'
+  scale_in_out:
+    maximum: 1
+    minimum: 1
+  vm_image: http://10.10.1.167:8080/NFS/files/VSBC-OAM-07-26
+  vm_image_format: qcow2
+  vm_image_md5: 7783ac39f3717c131d392823766d35b8
+  wc_notify: false
+- alias: BGW_VSBC
+  bootstrap_script: "#!/bin/bash\nPID_DHCLIENT=`ps axf | grep dhclient | grep -v grep\
+    \ | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT ]\nthen\n   kill -9 $PID_DHCLIENT\n\
+    fi\nrm -f /var/lib/dhclient/dhclient.leases\ndhclient eth0\nwhile [ `ls -l /var/lib/dhclient/dhclient.leases\
+    \ | awk '{print $5}'` -lt 100 ]\ndo\n   sleep 1\ndone\nsleep 10\nPID_DHCLIENT=`ps\
+    \ axf | grep dhclient | grep -v grep | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT\
+    \ ]\nthen\n   kill -9 $PID_DHCLIENT\nfi\nlinea=`grep -n \"eth0\" /var/lib/dhclient/dhclient.leases\
+    \ | awk ' { print $1 } ' | tr -d \":\" `\nlet linea+=1\nmng_ip=`head -n $linea\
+    \ /var/lib/dhclient/dhclient.leases | tail -1 | awk ' { print $2 } ' | tr -d \"\
+    ;\" `\nip a add $mng_ip/28 dev eth0\ngrep -q \"ListenAddress $mng_ip\" /etc/ssh/sshd_config\
+    \  >& /dev/null\nif [ $? -ne 0 ]\nthen\n   echo \"\" >> /etc/ssh/sshd_config\n\
+    \   echo \"ListenAddress $mng_ip\" >> /etc/ssh/sshd_config\n   echo \"\" >> /etc/ssh/sshd_config\n\
+    fi\necho \"IP BGW ETH0: $mng_ip\" > /etc/result_cloud_init\nrm -f /var/lib/dhclient/dhclient.leases\n\
+    dhclient eth3\nwhile [ `ls -l /var/lib/dhclient/dhclient.leases | awk '{print\
+    \ $5}'` -lt 100 ]\ndo\n   sleep 1\ndone\nPID_DHCLIENT=`ps axf | grep dhclient\
+    \ | grep -v grep | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT ]\nthen\n   kill\
+    \ -9 $PID_DHCLIENT\nfi\nsleep 10\nlinea=`grep -n \"eth3\" /var/lib/dhclient/dhclient.leases\
+    \ | awk ' { print $1 } ' | tr -d \":\" `\nlet linea+=1\nnetm='29'\nmng_ip=`head\
+    \ -n $linea /var/lib/dhclient/dhclient.leases | tail -1 | awk ' { print $2 } '\
+    \ | tr -d \";\" `\necho \"IP BGW ETH3: $mng_ip\" >> /etc/result_cloud_init\nrm\
+    \ -f /var/lib/dhclient/dhclient.leases\ndhclient eth0\nwhile [ `ls -l /var/lib/dhclient/dhclient.leases\
+    \ | awk '{print $5}'` -lt 100 ]\ndo\n   sleep 1\ndone\nsleep 10\nPID_DHCLIENT=`ps\
+    \ axf | grep dhclient | grep -v grep | awk ' { print $1 }'`\nif [ ! -z $PID_DHCLIENT\
+    \ ]\nthen\n   kill -9 $PID_DHCLIENT\nfi\nrm -f /var/lib/dhclient/dhclient.leases\n\
+    if [ $mng_ip == \"172.22.48.83\" ]\nthen\n  echo \"IP: 172.22.48.83 -> Non faccio\
+    \ niente!!!\" >> /etc/result_cloud_init\nelse\n  echo \"Creazione link a direttori\
+    \ : /d/258/ /d/259/ /d/260/ /d/261/ /d/262/ \" >> /etc/result_cloud_init\n  echo\
+    \ \"Cambio slot da 2 a 3\" >> /etc/result_cloud_init\n  /atcahome/ife/mountrw\n\
+    \  echo \"SLOT=3\" >> /Configuration/ATCA-CONF/shelf_slot.cfg\n  /atcahome/ife/mountro\n\
+    fi                                             \ncp /var/lib/cloud/data/instance-id\
+    \ /etc/instance-id\nsed -i s/id_instance_number/`cat /etc/instance-id`/g  /etc/collectd.conf\n\
+    sed -i s/ip_oem_instance/$mng_ip/g  /etc/collectd.conf\necho \"wc_notify --data-binary\
+    \ '{\\\"status\\\": \\\"SUCCESS\\\"}'\" > /home/Italtel/wcnotify_temp\nnumatt=1\n\
+    stringatotale=\"\"\nfor attributo in `cat /home/Italtel/wcnotify_temp`\ndo\n \
+    \  case $numatt in\n       6 | 9 | 12 ) partestr=\"'$attributo\" ;;\n       7\
+    \ | 10 | 13 ) partestr=\"$attributo'\" ;;\n       *)            partestr=\"$attributo\"\
+    \ ;;\n   esac\n   let numatt+=1\n   stringatotale=\"$stringatotale $partestr\"\
+    \ndone\nifconfig eth0 mtu 1500\nifconfig eth1 mtu 1400\nifconfig eth2 mtu 1400\n\
+    ifconfig eth3 mtu 1400\nifconfig eth4 mtu 1400\necho \"sleep 180\" > /home/Italtel/wcnotify_rit\n\
+    cat /home/Italtel/wcnotify_temp >> /home/Italtel/wcnotify_rit\nchmod +x /home/Italtel/wcnotify_rit\n\
+    /home/Italtel/wcnotify_rit &"
+  connection_points:
+  - id: CP034l
+    vlink_ref: vl0
+  - id: CPvjpg
+    vlink_ref: vl1
+  - id: CP40ed
+    vlink_ref: vl2
+  - id: CPi350
+    vlink_ref: vl5
+  - id: CPh9mu
+    vlink_ref: vl6
+  controller: false
+  id: vdu1
+  monitoring_parameters:
+  - desc: CPU Idle
+    metric: cpuidle
+    unit: '%'
+  - desc: CPU Utilization
+    metric: cpu_util
+    unit: '%'
+  - desc: Free Storage
+    metric: fsfree
+    unit: GB
+  - desc: Free Memory
+    metric: memfree
+    unit: MB
+  - desc: Network Incoming
+    metric: network_incoming
+    unit: Mbps
+  - desc: Network Outgoing
+    metric: network_outgoing
+    unit: Mbps
+  - desc: Load Average (1 Minute)
+    metric: load_shortterm
+    unit: '%'
+  - desc: Load Average (5 Minutes)
+    metric: load_midterm
+    unit: '%'
+  - desc: Load Average (15 Minutes)
+    metric: load_longterm
+    unit: '%'
+  - desc: Blocked Processes
+    metric: processes_blocked
+    unit: INT
+  - desc: Paging Processes
+    metric: processes_paging
+    unit: INT
+  - desc: Running Processes
+    metric: processes_running
+    unit: INT
+  - desc: Sleeping Processes
+    metric: processes_sleeping
+    unit: INT
+  - desc: Stopped Processes
+    metric: processes_stopped
+    unit: INT
+  - desc: Zombie Processes
+    metric: processes_zombie
+    unit: INT
+  monitoring_parameters_specific:
+  - desc: Total SIP Sessions
+    metric: total_sip_sessions
+    unit: INT
+  - desc: RTP pack IN
+    metric: rtp_pack_in
+    unit: INT
+  - desc: RTP pack OUT
+    metric: rtp_pack_out
+    unit: INT
+  - desc: RTP pack in byte IN
+    metric: rtp_pack_in_byte
+    unit: Byte
+  - desc: RTP pack in byte OUT
+    metric: rtp_pack_out_byte
+    unit: Byte
+  - desc: RTP frame loss
+    metric: rtp_frame_loss
+    unit: INT
+  - desc: Average Latency (RTP delay)
+    metric: average_latency
+    unit: Msec
+  - desc: Max Latency (RTP delay)
+    metric: max_latency
+    unit: Msec
+  - desc: Average Interarrival Jitter
+    metric: average_interarrival_jitter
+    unit: Msec
+  - desc: Max Interarrival Jitter
+    metric: max_interarrival_jitter
+    unit: Msec
+  - desc: Number of IN Transcoding
+    metric: number_of_in_transcoding
+    unit: INT
+  - desc: Number of OUT Transcoding
+    metric: number_of_out_transcoding
+    unit: INT
+  - desc: Number of OUT Transrating
+    metric: number_of_in_transrating
+    unit: INT
+  - desc: Number of OUT Transrating
+    metric: number_of_out_transrating
+    unit: INT
+  networking_resources: ''
+  resource_requirements:
+    cpu_support_accelerator: AES-NI
+    data_processing_acceleration_library: ''
+    hypervisor_parameters:
+      type: QEMU-KVM
+      version: 10002|12001|2.6.32-358.el6.x86_64
+    memory: 4
+    memory_parameters:
+      large_pages_required: false
+      numa_allocation_policy: ''
+    memory_unit: GB
+    network_interface_bandwidth: ''
+    network_interface_bandwidth_unit: ''
+    network_interface_card_capabilities:
+      SR-IOV: true
+      mirroring: false
+    platform_pcie_parameters:
+      SR-IOV: true
+      device_pass_through: true
+    storage:
+      persistence: false
+      size: 80
+      size_unit: GB
+    vcpus: 8
+    vswitch_capabilities:
+      overlay_tunnel: GRE
+      type: ovs
+      version: '2.0'
+  scale_in_out:
+    maximum: 2
+    minimum: 1
+  vm_image: http://10.10.1.167:8080/NFS/files/VSBC-BGW-07-20-2
+  vm_image_format: qcow2
+  vm_image_md5: f9af25baaebe6868c2fd44e11977ca7d
+  wc_notify: false
+version: '1'
+vlinks:
+- access: true
+  alias: MNG_ITL
+  connection_points_reference:
+  - CPckg7
+  - CP034l
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: true
+  id: vl0
+  leaf_requirement: 10Gbps
+  net_segment: 172.22.48.32/28
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu0
+  - vdu1
+- access: false
+  alias: PRIVATE_A
+  connection_points_reference:
+  - CP7acb
+  - CPvjpg
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl1
+  leaf_requirement: 10Gbps
+  net_segment: 10.1.0.0/16
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu0
+  - vdu1
+- access: false
+  alias: PRIVATE_B
+  connection_points_reference:
+  - CPbqmc
+  - CP40ed
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl2
+  leaf_requirement: 10Gbps
+  net_segment: 10.2.0.0/16
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu0
+  - vdu1
+- access: false
+  alias: SIP_N
+  connection_points_reference:
+  - CP1wkr
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl3
+  leaf_requirement: 10Gbps
+  net_segment: 172.21.48.64/28
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu0
+- access: false
+  alias: SIP_S
+  connection_points_reference:
+  - CPac4r
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl4
+  leaf_requirement: 10Gbps
+  net_segment: 172.21.48.96/28
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu0
+- access: false
+  alias: RTP_N
+  connection_points_reference:
+  - CPi350
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl5
+  leaf_requirement: 10Gbps
+  net_segment: 172.21.48.80/29
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu1
+- access: false
+  alias: RTP_S
+  connection_points_reference:
+  - CPh9mu
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: false
+  id: vl6
+  leaf_requirement: 10Gbps
+  net_segment: 172.21.48.112/29
+  port_security_enabled: false
+  qos: ''
+  root_requirement: 10Gbps
+  vdu_reference:
+  - vdu1
+vnf_lifecycle_events:
+- authentication: tnovatnova
+  authentication_port: 8080
+  authentication_type: HTTPBasicAuth
+  authentication_username: italtel
+  driver: http
+  events:
+    start:
+      command: POST /vnf_api/vSBC/config
+      template_file: '{\"controller\":\"get_attr[vdu0,PublicIp]\"}'
+      template_file_format: JSON
+    stop:
+      command: PUT /vnf_api/vSBC/config
+      template_file: '{\"controller\":\"get_attr[vdu0,PublicIp]\"}'
+      template_file_format: JSON
+  flavor_id_ref: flavor0
+  vnf_container: /home/Italtel/

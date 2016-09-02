@@ -1,0 +1,339 @@
+billing_model:
+  model: PAYG
+  period: P1D
+  price:
+    max_per_period: 1
+    min_per_period: 1
+    setup: 1
+    unit: EUR
+created_at: '2016-08-01T11:54:11Z'
+deployment_flavours:
+- assurance_parameters:
+  - formula: load_longterm GE 95
+    id: load_longterm
+    penalty:
+      expression: 10
+      unit: '%'
+      validity: P1D
+    rel_id: param0
+    unit: '%'
+    value: 95
+    violation:
+    - breaches_count: 2
+      interval: 360
+  constraint: ''
+  flavour_key: gold
+  id: flavor0
+  vdu_reference:
+  - vdu0
+  - vdu1
+  vlink_reference:
+  - vl0
+  - vl1
+description: VHG_VIOTECH_16_08_01__13H30
+descriptor_version: '1'
+id: 2373
+modified_at: '2016-08-01T11:54:11Z'
+name: VHG_VIOTECH_16_08_01__13H30
+provider: Viotech
+provider_id: 10
+release: T-NOVA
+trade: false
+type: ''
+vdu:
+- alias: Controller
+  bootstrap_script: '#!/usr/bin/env bash
+
+    echo ''echo $(date) > /root/snitch.start && echo $1 > start.txt''> /root/start;chmod
+    +x /root/start
+
+    echo ''echo $(date) > /root/snitch.stop && echo $1 > end.txt'' > /root/stop;chmod
+    +x /root/stop'
+  connection_points:
+  - id: CPc5tn
+    vlink_ref: vl0
+  controller: true
+  id: vdu0
+  monitoring_parameters:
+  - desc: CPU Idle
+    metric: cpuidle
+    unit: '%'
+  - desc: CPU Utilization
+    metric: cpu_util
+    unit: '%'
+  - desc: Free Storage
+    metric: fsfree
+    unit: GB
+  - desc: Free Memory
+    metric: memfree
+    unit: MB
+  - desc: Network Incoming
+    metric: network_incoming
+    unit: Mbps
+  - desc: Network Outgoing
+    metric: network_outgoing
+    unit: Mbps
+  - desc: Load Average (1 Minute)
+    metric: load_shortterm
+    unit: '%'
+  - desc: Load Average (5 Minutes)
+    metric: load_midterm
+    unit: '%'
+  - desc: Load Average (15 Minutes)
+    metric: load_longterm
+    unit: '%'
+  - desc: Blocked Processes
+    metric: processes_blocked
+    unit: INT
+  - desc: Paging Processes
+    metric: processes_paging
+    unit: INT
+  - desc: Running Processes
+    metric: processes_running
+    unit: INT
+  - desc: Sleeping Processes
+    metric: processes_sleeping
+    unit: INT
+  - desc: Stopped Processes
+    metric: processes_stopped
+    unit: INT
+  - desc: Zombie Processes
+    metric: processes_zombie
+    unit: INT
+  monitoring_parameters_specific: []
+  networking_resources: ''
+  resource_requirements:
+    cpu_support_accelerator: AES-NI
+    data_processing_acceleration_library: ''
+    hypervisor_parameters:
+      type: QEMU-KVM
+      version: 10002|12001|2.6.32-358.el6.x86_64
+    memory: 2
+    memory_parameters:
+      large_pages_required: false
+      numa_allocation_policy: ''
+    memory_unit: GB
+    network_interface_bandwidth: ''
+    network_interface_bandwidth_unit: ''
+    network_interface_card_capabilities:
+      SR-IOV: true
+      mirroring: false
+    platform_pcie_parameters:
+      SR-IOV: true
+      device_pass_through: true
+    storage:
+      persistence: false
+      size: 11
+      size_unit: GB
+    vcpus: 2
+    vswitch_capabilities:
+      overlay_tunnel: GRE
+      type: ovs
+      version: '2.0'
+  scale_in_out:
+    maximum: 1
+    minimum: 1
+  vm_image: http://10.10.1.167:8080/NFS/files/vhg.qcow2
+  vm_image_format: qcow2
+  vm_image_md5: a78c7c73ceb2feeb20d8cd82a4f97da3
+  wc_notify: true
+- alias: VHG
+  bootstrap_script: '#!/usr/bin/env bash
+
+    echo ''echo $(date) > /root/snitch.start && echo $1 > start.txt''> /root/start;chmod
+    +x /root/start
+
+    echo ''echo $(date) > /root/snitch.stop && echo $1 > end.txt'' > /root/stop;chmod
+    +x /root/stop'
+  connection_points:
+  - id: CPt8ad
+    vlink_ref: vl0
+  - id: CP6ka6
+    vlink_ref: vl1
+  controller: false
+  id: vdu1
+  monitoring_parameters:
+  - desc: CPU Idle
+    metric: cpuidle
+    unit: '%'
+  - desc: CPU Utilization
+    metric: cpu_util
+    unit: '%'
+  - desc: Free Storage
+    metric: fsfree
+    unit: GB
+  - desc: Free Memory
+    metric: memfree
+    unit: MB
+  - desc: Network Incoming
+    metric: network_incoming
+    unit: Mbps
+  - desc: Network Outgoing
+    metric: network_outgoing
+    unit: Mbps
+  - desc: Load Average (1 Minute)
+    metric: load_shortterm
+    unit: '%'
+  - desc: Load Average (5 Minutes)
+    metric: load_midterm
+    unit: '%'
+  - desc: Load Average (15 Minutes)
+    metric: load_longterm
+    unit: '%'
+  - desc: Blocked Processes
+    metric: processes_blocked
+    unit: INT
+  - desc: Paging Processes
+    metric: processes_paging
+    unit: INT
+  - desc: Running Processes
+    metric: processes_running
+    unit: INT
+  - desc: Sleeping Processes
+    metric: processes_sleeping
+    unit: INT
+  - desc: Stopped Processes
+    metric: processes_stopped
+    unit: INT
+  - desc: Zombie Processes
+    metric: processes_zombie
+    unit: INT
+  monitoring_parameters_specific: []
+  networking_resources: ''
+  resource_requirements:
+    cpu_support_accelerator: AES-NI
+    data_processing_acceleration_library: ''
+    hypervisor_parameters:
+      type: QEMU-KVM
+      version: 10002|12001|2.6.32-358.el6.x86_64
+    memory: 2
+    memory_parameters:
+      large_pages_required: false
+      numa_allocation_policy: ''
+    memory_unit: GB
+    network_interface_bandwidth: ''
+    network_interface_bandwidth_unit: ''
+    network_interface_card_capabilities:
+      SR-IOV: true
+      mirroring: false
+    platform_pcie_parameters:
+      SR-IOV: true
+      device_pass_through: true
+    storage:
+      persistence: false
+      size: 11
+      size_unit: GB
+    vcpus: 1
+    vswitch_capabilities:
+      overlay_tunnel: GRE
+      type: ovs
+      version: '2.0'
+  scale_in_out:
+    maximum: 5
+    minimum: 1
+  vm_image: http://10.10.1.167:8080/NFS/files/vhg.qcow2
+  vm_image_format: qcow2
+  vm_image_md5: a78c7c73ceb2feeb20d8cd82a4f97da3
+  wc_notify: true
+version: '1'
+vlinks:
+- access: true
+  alias: mgnt
+  connection_points_reference:
+  - CPc5tn
+  - CPt8ad
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: true
+  id: vl0
+  leaf_requirement: Unlimited
+  port_security_enabled: false
+  qos: ''
+  root_requirement: Unlimited
+  vdu_reference:
+  - vdu0
+  - vdu1
+- access: false
+  connection_points_reference:
+  - CP6ka6
+  connectivity_type: E-LINE
+  dhcp: true
+  external_access: true
+  id: vl1
+  leaf_requirement: Unlimited
+  port_security_enabled: false
+  qos: ''
+  root_requirement: Unlimited
+  vdu_reference:
+  - vdu1
+vnf_lifecycle_events:
+- authentication: '-----BEGIN RSA PRIVATE KEY-----
+
+    MIIEpQIBAAKCAQEAvJC3ZJCJttVPZfiwd/r0xki6yvrHXyWAaqHJfz8MtPR9FM8V
+
+    QyqAr/Kh5dthq+jB3/fMYOFyH1JZULiBSDXsnXr/38oa6qkBTZWE4mMWtSvoNzBx
+
+    QhCt906X3eYHsUNmjUbOMWUH2EKncYBdf2cO/faXMMCh9ESi85N4rSus1fLAvWtX
+
+    W683PfjJQ7WTYMV7ThYqyc0e9afZAnGWQDy9o6gmYrc68GVEdbONPwMstUkP+Z9s
+
+    s5o4JdtjlZcppjGEAJU+yuCdpX8emdnBEU2Q7hGpgp8p63SIuSQ9vV9v0NChj5Q4
+
+    8HCrZIkBWe2fpA4TWMMkW9P+y4mrf/czo6eeeQIDAQABAoIBAQCoYaoCOTdgdpaR
+
+    /kLGwOg279ctTkceZYSIs7QU1p5oMDJJlKnt8lQ7ybRcZ0yOkCgf8U0l7etUoNp0
+
+    xG1dqBmEfsNieT0T8prhRvUEm2s5mN2h+rYIQpC2WA4w7ipMVl2LJoEVhpw8tziC
+
+    mBflnoe6rKpRtJJqZ6gDTdri+C88VCK9vJNkTXx8Mg+Vol3/2U6hCNjcULLuHq45
+
+    m9BJwIpOLEVY4VKhb24C9hIU7wkDk+4D7y8D8rdbWLpmQGZ3Bc+tL4kTB8Mt7QhL
+
+    Tu4vWP2WKnocFAkkpQTJ2yiEC7A6NhbsNqXcgWIfJ1y9Be6ccu9k7TqQHKM9I0zH
+
+    e29nWPHJAoGBAONVYU6m9+C8a2rH2dZKO6i/R+AoKYVzKQomWq7DYoFzN5sA1v+D
+
+    9YxaEP+1nmgIP805RALd51ie+Ald/g0Y8t62odN2aMW19jtAINgj4lRoNcxjh75t
+
+    SgS3hLwhwQil84SXAEijZYpMmdHjziydE3yNXT8Z/M68toJRpL38nV7vAoGBANRX
+
+    2RsDbze83fSmfd+0ztuIXDc9JtgqV/qp95ezO0/jdLy9AD8NEKFgcb0OWE9lG5dj
+
+    aa/4JOQjJGI6Eg1tcQJ8aK3NHG9EDnAyWN4EMhxxzmOq43+3mf71dCL5n8025Fot
+
+    Nnuw96SRnZOd1LfhB0IQAzO4QD8oznsIH6ssrVkXAoGBAMz3gSmaD2o4WB1JnZXB
+
+    DnNCK3rmmzEwOLNnC2IA1gLjMCJ4KmDsyGrIFgWH6g/gSC4v0KtJCbp0cix364RB
+
+    l1DIl7WCUErameyoEDTwfbMe1kq2/n/qJ8+C65F4WYQDpEFKqD3V3MpJ8HI2lADT
+
+    iutExesL8k0wBtoO5JtLdVRPAoGALQOWdaCLwjAaiVOGGZdVxrooellPU8HeNrgz
+
+    UYhgSXY5eA1E8RjO7rboRaC13dbcO4KKlBAxmd9NRjlzPD94FoPTGQ0DOx8dRHGX
+
+    3zDagqcpjn1ajueYELFt9kAevT0muWseQqhoRw3LbtClmHlutXV5iExF6l23L+Ov
+
+    +vSUpu8CgYEA0btOwdWmvFIJzNbsUxKGk1dPNdNAs5pXDB6g7KAiMq422lJbVcyv
+
+    q5GGgkK3N9SzvSCxteR6Kdx3iNwBEsKUrOSTZc2J2nCNOZ26c6CKc0wi6cc7FAnA
+
+    YMTbMe8cecI0TI4hxPEEsHdmzZ5YLzhh5e/EOFzGI5aqbSs4M6BXrKw=
+
+    -----END RSA PRIVATE KEY-----'
+  authentication_port: 22
+  authentication_type: PubKeyAuthentication
+  authentication_username: root
+  driver: ssh
+  events:
+    start:
+      command: /root/start
+      template_file: '{"controller":"get_attr[vdu0,PublicIp]", "vdu0":"get_attr[vdu1,PublicIp]","vdu0mgt":
+        "get_attr[CPc5tn, fixed_ips, 0, ip_address]","vdu1mgt": "get_attr[CPt8ad,
+        fixed_ips, 0, ip_address]","vdu1data": "get_attr[CP6ka6, fixed_ips, 0, ip_address]"}'
+      template_file_format: JSON
+    stop:
+      command: /root/stop
+      template_file: '{}'
+      template_file_format: JSON
+  flavor_id_ref: flavor0
+  vnf_container: /root/
