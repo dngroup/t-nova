@@ -1,5 +1,4 @@
-
-/var/worker/scaling-ring.sh:
+/var/worker/scaling-out.sh:
   file:
     - managed
     - name: /var/worker/scaling-out.sh
@@ -12,6 +11,5 @@
   cmd:
     - run
     - name: /var/worker/scaling-out.sh
-    - cwd: /etc/worker
     - require:
       - file: /var/worker/scaling-out.sh

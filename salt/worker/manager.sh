@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+docker -d --label type=worker
 docker swarm init  --advertise-addr eth0
 docker service create \
+     --constraint 'type == worker' \
      --mode global \
      --name worker \
      -e CELERY_BROKER_URL=amqp://guest@{{ pillar['ips']['Frontend']['data_in'] }}/ \
