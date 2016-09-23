@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd /root/controller/scaling/worker/start
+cp /root/current.json scaling.json
+./start scaling.json
