@@ -7,4 +7,5 @@ easy_install pip
 #pip install scp
 ln -s /root/t-nova/salt /srv/salt
 ./init
-
+salt "Frontend" state.highstate
+salt "*" state.highstate
