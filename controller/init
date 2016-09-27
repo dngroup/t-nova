@@ -34,7 +34,7 @@ for (name, ip) in data.items():
             data2[name2[0]] = {};
             data2[name2[0]][name2[1]] = ip;
 
-masterIp = data2["Controller"]["management"]
+masterIp = data2["controller"]["management"]
 ips_json = {"ips": data2}
 yml = yaml.safe_dump(ips_json, allow_unicode=True)
 print yml

@@ -2,8 +2,9 @@
 
 apt-get update
 apt-get install python-paramiko --yes
-apt-get install --reinstall python-pip --yes
-pip install scp
+easy_install pip
+#apt-get install --reinstall python-pip --yes
+#pip install scp
 ln -s /root/t-nova/salt /srv/salt
 ./init
 
