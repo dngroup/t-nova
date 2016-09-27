@@ -17,7 +17,7 @@ core-worker:
   docker.running:
     - image: dngroup/vhg-adaptation-worker
     - environment:
-      - "CELERY_BROKER_URL" : "amqp://guest@{{ pillar['ips']['Frontend']['data_in'] }}/"
-      - "ST_AUTH" : "http://{{ pillar['ips']['Frontend']['data_in'] }}:8080/auth/v1.0"
+      - "CELERY_BROKER_URL" : "amqp://guest@{{ pillar['ips']['Frontend']['data'] }}/"
+      - "ST_AUTH" : "http://{{ pillar['ips']['Frontend']['data'] }}:8080/auth/v1.0"
       - "ST_USER" : "admin:admin"
       - "ST_KEY" : "admin"

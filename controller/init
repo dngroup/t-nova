@@ -26,12 +26,13 @@ data2 = {};
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 for (name, ip) in data.items():
-    name2 = name.split(".");
-    try:
-        data2[name2[0]][name2[1]] = ip;
-    except:
-        data2[name2[0]] = {};
-        data2[name2[0]][name2[1]] = ip;
+    name2 = name.split("-");
+    if (len(name2) == 2 ):
+        try:
+            data2[name2[0]][name2[1]] = ip;
+        except:
+            data2[name2[0]] = {};
+            data2[name2[0]][name2[1]] = ip;
 
 masterIp = data2["Controller"]["management"]
 ips_json = {"ips": data2}
