@@ -15,4 +15,4 @@ monitoring-worker-t-nova:
       - "QUEUE" : "soft"
       - "METRICNAME" : "worker"
     - require:
-      - docker: dngroup/monitoring-worker-t-nova
+      - dockerng: dngroup/monitoring-worker-t-nova

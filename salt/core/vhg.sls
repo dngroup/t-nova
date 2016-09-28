@@ -22,4 +22,4 @@ vhg:
       - "FRONTAL_PORT" : "5000"
       - "FRONTAL_HOSTNAME" : "{{ pillar['ips']['Frontend']['management'] }}"
     - require: 
-      - docker: dngroup/adapted-video-osgi-bundle
+      - dockerng: dngroup/adapted-video-osgi-bundle

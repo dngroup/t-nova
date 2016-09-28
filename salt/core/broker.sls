@@ -8,4 +8,4 @@ core-broker:
     - image:  rabbitmq:3.5.4-management
     - port_bindings: "5672:5672,15672;15672"
     - require: 
-      - dockerng: rabbitmq
+      - dockerng: rabbitmq:3.5.4-management
