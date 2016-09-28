@@ -2,12 +2,12 @@
 
 
 dngroup/monitoring-worker-t-nova:
-  docker.pulled:
-    - tag: latest
+  dockerng.image_present:
+    - force: True
     - name:  dngroup/monitoring-t-nova
 
 monitoring-worker-t-nova:
-  docker.running:
+  dockerng.running:
     - image:  dngroup/monitoring-t-nova
     - environment:
       - "UUID" : "{{ uuid }}"

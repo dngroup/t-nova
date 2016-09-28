@@ -1,6 +1,6 @@
 dngroup/vhg-adaptation-worker:
-  docker.pulled:
-    - tag: latest
+  dockerng.image_present:
+    - force: True
 
 
 
@@ -14,7 +14,7 @@ dngroup/vhg-adaptation-worker:
 
 
 core-worker:
-  docker.running:
+  dockerng.running:
     - image: dngroup/vhg-adaptation-worker
     - environment:
       - "CELERY_BROKER_URL" : "amqp://guest@{{ pillar['ips']['Frontend']['data'] }}/"

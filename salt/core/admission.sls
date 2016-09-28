@@ -1,7 +1,7 @@
 dngroup/vhg-adaptation-admission:
-  docker.pulled:
-    - name: dngroup/vhg-adaptation-worker
-    - tag: t-nova
+  dockerng.image_present:
+    - force: True
+    - name: dngroup/vhg-adaptation-worker:t-nova
 
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
@@ -13,7 +13,7 @@ dngroup/vhg-adaptation-admission:
   
 
 core-admission:
-  docker.running:
+  dockerng.running:
     - image: dngroup/vhg-adaptation-worker:t-nova
     - environment:
       - "CELERY_BROKER_URL" : "amqp://guest@{{ pillar['ips']['Frontend']['data'] }}"

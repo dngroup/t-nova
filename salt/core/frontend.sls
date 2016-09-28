@@ -1,6 +1,5 @@
 dngroup/adapted-video-frontend:
-  docker.pulled:
-    - tag: latest
+  dockerng.image_present:
     - force: True
     - name: dngroup/adapted-video-frontend
 
@@ -16,12 +15,9 @@ dngroup/adapted-video-frontend:
 
 
 core-frontend:
-  docker.running:
+  dockerng.running:
     - image: dngroup/adapted-video-frontend
-    - ports:
-      - "8080/tcp":
-          HostIp: "0.0.0.0"
-          HostPort: "5000"  
+    - port_bindings: "5000:8080"
     - volumes:
       - "/root:/root:ro" 
     - environment:

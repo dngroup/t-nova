@@ -1,6 +1,6 @@
 dngroup/adapted-video-osgi-bundle:
-  docker.pulled:
-    - tag: latest
+  dockerng.image_present:
+    - force: True
 
 
 
@@ -15,12 +15,9 @@ dngroup/adapted-video-osgi-bundle:
 
 
 vhg:
-  docker.running:
+  dockerng.running:
     - image:  dngroup/adapted-video-osgi-bundle
-    - ports:
-      - "8080/tcp":
-          HostIp: "0.0.0.0"
-          HostPort: "8080"
+    - port_bindings: "8080:8080"
     - environment:
       - "FRONTAL_PORT" : "5000"
       - "FRONTAL_HOSTNAME" : "{{ pillar['ips']['Frontend']['management'] }}"
