@@ -6,6 +6,8 @@ import sys
 import time
 import yaml
 import argparse
+import os
+
 
 from scp import SCPClient
 
@@ -31,13 +33,20 @@ def scalling(s):
             data2[name2[0]] = {};
             data2[name2[0]][name2[1]] = ip;
 
-    masterIp = data2["Controller"]["management"]
+    # get the management ip of controller
+    ssh.connect('127.0.0.1', username="root")
+    stdin, stdout, stderr = ssh.exec_command("cat /srv/pillar/ips.sls | grep 'controller' | sed 's/^.*management: //' | sed 's/}//'")
+    masterIptemp = stdout.read()
+    masterIp=masterIptemp.rstrip('\r\n')
+    print "ip controller : ",masterIp
+
     ips_json = {"ips": data2}
     yml = yaml.safe_dump(ips_json, allow_unicode=True)
     print yml
 
-    name = data.items()[0][0].split("-")[0]
-    ips = data2[name]
+    nametemp=data.items()[0][0].split("-")[0]
+    ips = data2[nametemp]
+    name = nametemp+os.getenv('HOSTNAME', ips["management"].replace(".", "-"))
 
     print name, " ", ips, " connect to ", ips["management"]
     ssh.connect(ips["management"], username="root")
@@ -45,11 +54,11 @@ def scalling(s):
     scp.put("../../tnova_send_metric", "/usr/local/bin/tnova_send_metric")
 
     _do(ssh, 'service salt-minion stop')
-    _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
+    _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2/SALTSTACK-GPG-KEY.pub | sudo apt-key add -')
     _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
-    _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
+    _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2 jessie main" >> /etc/apt/sources.list.d/saltstack.list')
     _do(ssh, 'apt-get update')
-    _do(ssh, 'apt-get install salt-minion docker-engine --yes')
+    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 docker-engine --yes')
     _do(ssh, 'easy_install --upgrade pip')
     _do(ssh, 'pip install docker-py pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
@@ -61,14 +70,13 @@ def scalling(s):
     _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
     _do(ssh, 'echo "  - core" >> /etc/salt/grains')
-    # _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
+    _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
     print "start salt (sleep 30s)"
     time.sleep(30)
     ssh.connect("127.0.0.1", username="root")
     _do(ssh, "salt '%s' state.highstate" % name)
-    _do(ssh, "salt '%s' state.sls " % name)
     print "Finish complete"
 
 

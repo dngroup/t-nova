@@ -1,7 +1,7 @@
 {
-"worker3-management":"192.189.8.4",
-"worker3-data":"192.189.7.4",
-"Controller-management":"192.189.8.4"
+"worker-management":"192.99.218.8",
+"worker-data":"192.209.84.6",
+"controller":"10.10.1.101"
 }
 
 

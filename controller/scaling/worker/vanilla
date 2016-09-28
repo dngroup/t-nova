@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-cd /root/controller/scaling/worker/start
+cd /root/t-nova/controller/scaling/worker/
 cp /root/current.json scaling.json
 ./start scaling.json
+nano
