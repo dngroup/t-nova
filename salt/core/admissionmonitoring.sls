@@ -15,4 +15,4 @@ monitoring-admission-t-nova:
       - "QUEUE" : "celery"
       - "METRICNAME" : "admission"
     - require:
-      - docker: dngroup/monitoring-admission-t-nova
+      - dockerng: dngroup/monitoring-admission-t-nova

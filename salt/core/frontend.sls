@@ -27,4 +27,4 @@ core-frontend:
       - "SWIFT_URL" : "http://{{ pillar['ips']['Frontend']['data'] }}:8080"
       - "TRANSCOD_PARAM_FILE" : "~/transcodeParam.json"
     - require: 
-      - docker: dngroup/adapted-video-frontend
+      - dockerng: dngroup/adapted-video-frontend
