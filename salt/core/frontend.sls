@@ -1,6 +1,7 @@
 dngroup/adapted-video-frontend:
   docker.pulled:
     - tag: latest
+    - force: True
     - name: dngroup/adapted-video-frontend
 
 

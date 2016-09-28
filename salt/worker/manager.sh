@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-docker -d --label type=worker
+# docker demon is already running remove the next line
+#docker -d --label type=worker
 docker swarm init  --advertise-addr eth0
 docker service create \
-     --constraint 'type == worker' \
      --mode global \
      --name worker \
      -e CELERY_BROKER_URL=amqp://guest@{{ pillar['ips']['Frontend']['data'] }}/ \
@@ -11,3 +11,4 @@ docker service create \
      -e ST_USER=admin:admin \
      -e ST_KEY=admin \
      dngroup/vhg-adaptation-worker
+     #     --constraint 'type == worker' \

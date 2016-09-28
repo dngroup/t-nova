@@ -46,11 +46,11 @@ for (name, ips) in data2.items():
     scp.put("tnova_send_metric","/usr/local/bin/tnova_send_metric")
 
     _do(ssh, 'service salt-minion stop')
-    _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
+    _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2/SALTSTACK-GPG-KEY.pub | sudo apt-key add -')
     _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
-    _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main" >> /etc/apt/sources.list')
+    _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2 jessie main" >> /etc/apt/sources.list.d/saltstack.list')
     _do(ssh, 'apt-get update')
-    _do(ssh, 'apt-get install salt-minion docker-engine=1.10.3-0~jessie --yes')
+    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 docker-engine=1.10.3-0~jessie --yes')
     _do(ssh, 'easy_install --upgrade pip')
     _do(ssh, 'pip install docker-py==1.8.0 pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
@@ -66,7 +66,7 @@ for (name, ips) in data2.items():
         _do(ssh, "echo " + ips2["management"] + "   " + name2 + " >> /etc/hosts")
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
     if ("controller" in name ):
-        _do(ssh, 'apt-get install salt-master --yes')
+        _do(ssh, 'apt-get install salt-master=2016.3.2+ds-1 --yes')
         _do(ssh, 'echo "fileserver_backend:" >> /etc/salt/master')
         _do(ssh, 'echo "  - roots" >> /etc/salt/master')
         _do(ssh, 'echo "  - minion" >> /etc/salt/master')
@@ -101,6 +101,7 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - swift_object" >> /etc/salt/grains')
     elif ("Worker" in name):
+        _do(ssh, 'apt-get install docker-engine --yes')
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
