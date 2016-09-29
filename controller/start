@@ -2,9 +2,6 @@
 
 apt-get update
 apt-get install python-paramiko --yes
-easy_install scp
-#apt-get install --reinstall python-pip --yes
-#pip install scp
 ln -s /root/t-nova/salt /srv/salt
 ./init
 salt-run state.orchestrate orch
