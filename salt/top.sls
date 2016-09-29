@@ -21,10 +21,11 @@ base:
     - watch:
       - sls: storage/nodes
     - storage
-    - storage/nodes
+#    - storage/nodes  #move to orch.sls
 
   'roles:core':
     - match: grain
+    - docker
     - core
     
   'roles:worker':
