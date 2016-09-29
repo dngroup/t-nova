@@ -50,7 +50,7 @@ for (name, ips) in data2.items():
     _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2 jessie main" >> /etc/apt/sources.list.d/saltstack.list')
     _do(ssh, 'apt-get update')
-    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 --yes')
+    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 salt-common=2016.3.2+ds-1 --yes')
     _do(ssh, 'easy_install --upgrade pip')
     _do(ssh, 'pip install docker-py pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
@@ -66,7 +66,7 @@ for (name, ips) in data2.items():
         _do(ssh, "echo " + ips2["management"] + "   " + name2 + " >> /etc/hosts")
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
     if ("controller" in name ):
-        _do(ssh, 'apt-get install salt-master=2016.3.2+ds-1 salt-common=2016.3.2+ds-1--yes')
+        _do(ssh, 'apt-get install salt-master=2016.3.2+ds-1 salt-common=2016.3.2+ds-1 --yes')
         _do(ssh, 'echo "fileserver_backend:" >> /etc/salt/master')
         _do(ssh, 'echo "  - roots" >> /etc/salt/master')
         _do(ssh, 'echo "  - minion" >> /etc/salt/master')
