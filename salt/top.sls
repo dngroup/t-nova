@@ -49,3 +49,4 @@ base:
     - match: grain
     - core.workermonitoring
     - core.admissionmonitoring
+    - worker

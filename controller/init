@@ -50,14 +50,14 @@ for (name, ips) in data2.items():
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2 jessie main" >> /etc/apt/sources.list.d/saltstack.list')
     _do(ssh, 'apt-get update')
     _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 salt-common=2016.3.2+ds-1 --yes')
-    _do(ssh, 'easy_install --upgrade pip')
-    _do(ssh, 'pip install docker-py pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
 
-    _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
+
+
+    # _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
 
     # for everbody
     _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
@@ -73,17 +73,25 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "" >> /etc/salt/master')
         _do(ssh, 'echo "file_recv: True" >> /etc/salt/master')
         _do(ssh, 'echo "auto_accept: True" >> /etc/salt/master')
-        _do(ssh, 'echo "open_mode: True" >> /etc/salt/master')
         _do(ssh, 'service salt-master restart')
         _do(ssh, 'mkdir -p /srv/pillar/')
         _do(ssh, 'echo "mine_functions:" > /srv/pillar/swift.sls')
         _do(ssh, 'echo "  network.ip_addrs: [eth1]"  >> /srv/pillar/swift.sls')
         _do(ssh, 'echo "' + yml + '"  >> /srv/pillar/ips.sls')
+
+        _do(ssh, 'echo "docker-pkg:" >> /srv/pillar/docker.sls')
+        _do(ssh, 'echo "  lookup:" >> /srv/pillar/docker.sls')
+        _do(ssh, 'echo "    version: 1.12.1-0~jessie" >> /srv/pillar/docker.sls')
+
         _do(ssh, 'echo "base:" > /srv/pillar/top.sls')
         _do(ssh, 'echo "  \'*\':" >> /srv/pillar/top.sls')
         _do(ssh, 'echo "    - swift" >> /srv/pillar/top.sls')
         _do(ssh, 'echo "    - ips" >> /srv/pillar/top.sls')
+        _do(ssh, 'echo "    - docker" >> /srv/pillar/top.sls')
+
+
         _do(ssh, 'echo "  - controller" >> /etc/salt/grains')
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
 
         print "Finish Controller"
     elif ("VHG" in name):
