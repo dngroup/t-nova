@@ -2,6 +2,7 @@ install_all_server:
   salt.state:
     - tgt: '*'
     - highstate: True
+    - reload_pillar: true
 
 
 swift_object:
