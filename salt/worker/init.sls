@@ -3,8 +3,7 @@
 {%- set Worker_ip= addrs.items()[0][1][0] %}
 {%- set key = salt['mine.get']('roles:controller', 'key_swarm', expr_form='grain')  %}
 
-#echo {{ key.items()[0][1] }} > /root/key:
-#  cmd.run
+
 
 /etc/default/docker:
   file:

@@ -31,7 +31,7 @@ base:
   'roles:worker':
     - match: grain
 #    - core.worker
-    - worker
+#    - worke r#move to orch.sls
 
   'roles:admission':
     - match: grain
