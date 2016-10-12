@@ -14,6 +14,16 @@ swift_object:
     - require:
       - salt: install_all_server
 
+updatemine:
+  salt.state: # update pillar,
+    - tgt: 'roles:controller'
+    - tgt_type: grain
+    - sls:
+      - updatemine
+    - require:
+      - salt: install_all_server
+    - reload_pillar: true
+
 worker:
   salt.state: # use the updated pillar, but it's still the old one...
     - tgt: 'roles:worker'
@@ -21,5 +31,5 @@ worker:
     - sls:
       - worker
     - require:
-      - salt: install_all_server
+      - salt: updatemine
     - reload_pillar: true
