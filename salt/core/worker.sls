@@ -21,3 +21,4 @@ core-worker:
       - "ST_AUTH" : "http://{{ pillar['ips']['Frontend']['data'] }}:8080/auth/v1.0"
       - "ST_USER" : "admin:admin"
       - "ST_KEY" : "admin"
+    - user: user

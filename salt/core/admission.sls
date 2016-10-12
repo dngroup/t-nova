@@ -21,3 +21,9 @@ core-admission:
       - "ST_USER" : "admin:admin"
       - "ST_KEY" : "admin"
       - "QUEUE" : "celery"
+#salt issu https://github.com/saltstack/salt/issues/31595
+    - user: user
+    - require:
+      - dockerng: dngroup/vhg-adaptation-admission
+
+
