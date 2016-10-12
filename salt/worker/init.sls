@@ -1,5 +1,5 @@
+{%- set lala = salt['mine.update']()  %}
 {%- set key = salt['mine.get']('roles:controller', 'key_swarm', expr_form='grain')  %}
-
 
 /etc/default/docker:
   file:
