@@ -16,9 +16,9 @@
 docker:
   service.running:
     - enable: True
-    - reload: True
     - watch:
       - file: /etc/default/docker
+
 
 docker swarm join --token {{ key.items()[0][1] }}  {{ pillar['ips']['controller']['management'] }}:
   cmd.run:

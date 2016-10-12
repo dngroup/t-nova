@@ -35,6 +35,8 @@ for (name, ip) in data.items():
 
 masterIp = data2["controller"]["management"]
 ips_json = {"ips": data2}
+
+# parse json file to yaml to create a pillar
 yml = yaml.safe_dump(ips_json, allow_unicode=True)
 print yml
 
