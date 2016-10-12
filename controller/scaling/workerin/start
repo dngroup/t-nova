@@ -3,4 +3,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #cp /root/scaling.json $DIR/scaling.json
 $DIR/init --file $1
-salt 'core:worker' state.highstate
+

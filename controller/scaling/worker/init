@@ -53,7 +53,7 @@ def scalling(s):
     # get the uuid of the vm and set at name
     stdin, stdout, stderr = ssh.exec_command("curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*\"uuid\": \"//; s/\".*//'")
     uuidtemp = stdout.read()
-    uuid=masterIptemp.rstrip('\r\n')
+    uuid=uuidtemp.rstrip('\r\n')
     name = nametemp+"_"+uuid
     print name, " ", ips, " connect to ", ips["management"]
 
@@ -79,8 +79,8 @@ def scalling(s):
 
     print "start salt (sleep 30s)"
     time.sleep(30)
-    ssh.connect("127.0.0.1", username="root")
-    _do(ssh, "salt '%s' state.highstate" % name)
+    # ssh.connect("127.0.0.1", username="root")
+    # _do(ssh, "salt 'core:worker' state.highstate")
     print "Finish complete"
 
 

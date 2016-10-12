@@ -3,4 +3,3 @@
 cd /root/t-nova/controller/scaling/worker/
 cp /root/current.json scaling.json
 ./start scaling.json
-nano

@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+
+import json
+import paramiko
+import sys
+import time
+import yaml
+import argparse
+import os
+
+
+def _do(ssh, command):
+    stdin, stdout, stderr = ssh.exec_command(command)
+    print stdout.read()
+    sys.stderr.write(stderr.read())
+
+
+def scalling(s):
+    with open(s) as f:
+        data = json.loads(f.read())
+
+    data2 = {};
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    for (name, ip) in data.items():
+        name2 = name.split("-");
+        try:
+            data2[name2[0]][name2[1]] = ip;
+        except:
+            data2[name2[0]] = {};
+            data2[name2[0]][name2[1]] = ip;
+
+    # get the management ip of controller
+    ssh.connect('127.0.0.1', username="root")
+    stdin, stdout, stderr = ssh.exec_command(
+        "cat /srv/pillar/ips.sls | grep 'controller' | sed 's/^.*management: //' | sed 's/}//'")
+    masterIptemp = stdout.read()
+    masterIp = masterIptemp.rstrip('\r\n')
+    print "ip controller : ", masterIp
+
+    ips_json = {"ips": data2}
+    yml = yaml.safe_dump(ips_json, allow_unicode=True)
+    print yml
+
+    nametemp = data.items()[0][0].split("-")[0]
+    ips = data2[nametemp]
+
+    ssh.connect(ips["management"], username="root")
+    # scp = SCPClient(ssh.get_transport())
+    # scp.put("../../tnova_send_metric", "/usr/local/bin/tnova_send_metric")
+
+    # get the uuid of the vm and set at name
+    stdin, stdout, stderr = ssh.exec_command(
+        "echo $HOSTNAME")
+    uuidtemp = stdout.read()
+    hostname = uuidtemp.rstrip('\r\n')
+
+
+    # docker node update --availability pause $HOSTNAME
+    # ssh -o StrictHostKeyChecking=no {{ Worker_ip }} 'docker node update --availability pause $HOSTNAME'
+    #
+    # ## docker kill -s SIGTERM do not propagate to celery because of bash charging venv
+    # # for that we exec inside the container a kill and we get the first bahs (venv) and get only the pid to soft kill it
+    #
+    # docker exec -it --user root $(docker ps -q) /bin/bash -c "kill -15 \$(ps -e | grep bash | head -n 1 | cut -b 4-6 )"
+
+    ssh.connect('127.0.0.1', username="root")
+    _do(ssh, 'docker node update --availability pause %s' % hostname)
+
+    ssh.connect(ips["management"], username="root")
+    _do(ssh,
+        'docker exec -it --user root $(docker ps -q) /bin/bash -c "kill -15 \$(ps -e | grep bash | head -n 1 | cut -b 4-6 )"')
+
+    print "Finish complete"
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', "-f", type=str, required=True)
+    args = parser.parse_args()
+    scalling(args.file)

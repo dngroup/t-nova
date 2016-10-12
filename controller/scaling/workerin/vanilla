@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd /root/t-nova/controller/scaling/workerin/
+cp /root/current.json scalingin.json
+./start scalingin.json
