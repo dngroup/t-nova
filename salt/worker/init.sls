@@ -1,7 +1,6 @@
 {%- set key = salt['mine.get']('roles:controller', 'key_swarm', expr_form='grain')  %}
 
 
-
 /etc/default/docker:
   file:
     - managed
@@ -13,12 +12,17 @@
     - mode: 755
 
 
-docker:
+dockerservice:
   service.running:
     - enable: True
     - watch:
       - file: /etc/default/docker
 
+docker -v:
+  cmd.run
+
+date:
+  cmd.run
 
 docker swarm join --token {{ key.items()[0][1] }}  {{ pillar['ips']['controller']['management'] }}:
   cmd.run:
