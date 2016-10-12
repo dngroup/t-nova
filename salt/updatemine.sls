@@ -1,3 +1,3 @@
 update:
   cmd.run:
-    - name: salt '*' mine.update
+    - name: salt-call mine.update || echo lala
