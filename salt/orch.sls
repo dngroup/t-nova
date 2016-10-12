@@ -1,4 +1,4 @@
-install_all_server:
+install_all_server: # update the pillar
   salt.state:
     - tgt: '*'
     - highstate: True
@@ -15,7 +15,7 @@ swift_object:
       - salt: install_all_server
 
 worker:
-  salt.state:
+  salt.state: # use the updated pillar, but it's still the old one...
     - tgt: 'roles:worker'
     - tgt_type: grain
     - sls:
