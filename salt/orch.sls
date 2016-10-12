@@ -22,3 +22,4 @@ worker:
       - worker
     - require:
       - salt: install_all_server
+    - reload_pillar: true
