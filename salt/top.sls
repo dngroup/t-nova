@@ -25,8 +25,8 @@ base:
 
   'roles:core':
     - match: grain
-    - docker
     - core
+    - docker
     
   'roles:worker':
     - match: grain
@@ -49,4 +49,4 @@ base:
     - match: grain
     - core.workermonitoring
     - core.admissionmonitoring
-    - worker
+    - worker.manager

@@ -85,11 +85,19 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  lookup:" >> /srv/pillar/docker.sls')
         _do(ssh, 'echo "    version: 1.12.1-0~jessie" >> /srv/pillar/docker.sls')
 
+        _do(ssh, 'echo "mine_functions:" >> /srv/pillar/swarm.sls')
+        _do(ssh, 'echo "  key_swarm:" >> /srv/pillar/swarm.sls')
+        _do(ssh, 'echo "    - mine_function: cmd.run" >> /srv/pillar/swarm.sls')
+        _do(ssh, 'echo "    - docker swarm join-token worker -q" >> /srv/pillar/swarm.sls')
+
         _do(ssh, 'echo "base:" > /srv/pillar/top.sls')
         _do(ssh, 'echo "  \'*\':" >> /srv/pillar/top.sls')
         _do(ssh, 'echo "    - swift" >> /srv/pillar/top.sls')
         _do(ssh, 'echo "    - ips" >> /srv/pillar/top.sls')
         _do(ssh, 'echo "    - docker" >> /srv/pillar/top.sls')
+        _do(ssh, 'echo "    - swarm" >> /srv/pillar/top.sls')
+
+
 
 
         _do(ssh, 'echo "  - controller" >> /etc/salt/grains')
