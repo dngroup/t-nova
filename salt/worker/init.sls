@@ -1,6 +1,3 @@
-{%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
-{%- set addrs = salt['mine.get']('roles:worker', minealias,"grain") %}
-{%- set Worker_ip= addrs.items()[0][1][0] %}
 {%- set key = salt['mine.get']('roles:controller', 'key_swarm', expr_form='grain')  %}
 
 
@@ -23,5 +20,7 @@ docker:
     - watch:
       - file: /etc/default/docker
 
-docker swarm join --token {{ key.items()[0][1] }}  {{ Worker_ip }}:
-  cmd.run
+docker swarm join --token {{ key.items()[0][1] }}  {{ pillar['ips']['controller']['management'] }}:
+  cmd.run:
+    - watch:
+      - file: /etc/default/docker
