@@ -17,6 +17,8 @@ salt '*' cmd.run 'docker ps -a'
 ## prepare scaling
 cp /root/t-nova/controller/scaling/worker/vanilla /root/scalingout
 cp /root/t-nova/controller/scaling/workerin/vanilla /root/scalingin
+chmod +x /root/scalingout
+chmod +x /root/scalingin
 
 #use to calc time to do installation (take 6min to go here ?)
 date

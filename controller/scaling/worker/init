@@ -10,7 +10,6 @@ import os
 
 
 
-
 def _do(ssh, command):
     stdin, stdout, stderr = ssh.exec_command(command)
     print stdout.read()
@@ -26,11 +25,12 @@ def scalling(s):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     for (name, ip) in data.items():
         name2 = name.split("-");
-        try:
-            data2[name2[0]][name2[1]] = ip;
-        except:
-            data2[name2[0]] = {};
-            data2[name2[0]][name2[1]] = ip;
+        if (len(name2) == 2 ):
+            try:
+                data2[name2[0]][name2[1]] = ip;
+            except:
+                data2[name2[0]] = {};
+                data2[name2[0]][name2[1]] = ip;
 
     # get the management ip of controller
     ssh.connect('127.0.0.1', username="root")
@@ -62,14 +62,13 @@ def scalling(s):
     _do(ssh, "sed '/saltstack/d' /etc/apt/sources.list")
     _do(ssh, 'echo "deb http://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2 jessie main" >> /etc/apt/sources.list.d/saltstack.list')
     _do(ssh, 'apt-get update')
-    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 --yes')
+    _do(ssh, 'apt-get install salt-minion=2016.3.2+ds-1 salt-common=2016.3.2+ds-1 --yes')
     _do(ssh, 'easy_install --upgrade pip')
     _do(ssh, 'pip install docker-py pip --upgrade')
     _do(ssh, 'echo "%s" > /etc/salt/minion_id' % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
-    _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
     # for everbody
     _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
     _do(ssh, 'echo "roles:" > /etc/salt/grains')
@@ -77,10 +76,10 @@ def scalling(s):
     _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
-    print "start salt (sleep 30s)"
-    time.sleep(30)
-    # ssh.connect("127.0.0.1", username="root")
-    # _do(ssh, "salt 'core:worker' state.highstate")
+    print "start salt"
+    _do(ssh, "salt-call state.highstate"%s) # do only on this node because restart docker service (and kill current job)
+    _do(ssh, "salt-call state.sls worker"%s) # normally do by the orchestrator
+
     print "Finish complete"
 
 
