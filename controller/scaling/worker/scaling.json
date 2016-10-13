@@ -1,7 +1,1 @@
-{
-"worker-management":"192.99.218.8",
-"worker-data":"192.209.84.6",
-"controller":"10.10.1.101"
-}
-
-
+{"Worker-data": "192.0.22.7", "controller-management": "get_attr[CP0mxm,fixed_ips,0,ip_address]", "controller": "get_attr[vdu0,CPudhr,PublicIp]", "Worker-management": "192.32.241.9"}
