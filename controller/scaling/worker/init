@@ -77,8 +77,8 @@ def scalling(s):
     _do(ssh, "service salt-minion restart")
 
     print "start salt"
-    _do(ssh, "salt-call state.highstate"%s) # do only on this node because restart docker service (and kill current job)
-    _do(ssh, "salt-call state.sls worker"%s) # normally do by the orchestrator
+    _do(ssh, "salt-call state.highstate") # do only on this node because restart docker service (and kill current job)
+    _do(ssh, "salt-call state.sls worker") # normally do by the orchestrator
 
     print "Finish complete"
 
