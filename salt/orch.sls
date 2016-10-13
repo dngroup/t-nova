@@ -13,6 +13,15 @@ swift_object:
     - require:
       - salt: install_all_server
 
+admission:
+  salt.state:
+    - tgt: 'roles:admission'
+    - tgt_type: grain
+    - sls:
+      - core.admission
+    - require:
+      - salt: install_all_server
+
 updatemine:
   salt.state: # update pillar,
     - tgt: 'roles:controller'

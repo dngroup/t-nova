@@ -31,11 +31,11 @@ base:
   'roles:worker':
     - match: grain
 #    - core.worker
-#    - worke r#move to orch.sls
+#    - worker#move to orch.sls
 
   'roles:admission':
     - match: grain
-    - core.admission
+#    - core.admission #move to orch.sls
 
   'roles:frontend':
     - match: grain
