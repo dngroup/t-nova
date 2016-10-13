@@ -39,7 +39,7 @@ base:
 
   'roles:frontend':
     - match: grain
-    - core.frontend
+#    - core.frontend #move to orch.sls
 
   'roles:vhg':
     - match: grain
