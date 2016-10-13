@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
+# value from rundeck but not very real
+#use to calc time to do installation (take 16min to go here ?)
+date
 
 apt-get update
 apt-get install python-paramiko --yes
 ln -s /root/t-nova/salt /srv/salt
 ./init
+
+#use to calc time to do installation (take 5min to go here ?)
+date
+
 salt-key
 salt-run state.orchestrate orch
-
-salt '*' cmd.run 'docker ps'
+salt '*' cmd.run 'docker ps -a'
 ## prepare scaling
-cp worker/vanilla /root/scalingout
-cp workerin/vanilla /root/scalingin
+cp /root/t-nova/controller/scaling/worker/vanilla /root/scalingout
+cp /root/t-nova/controller/scaling/workerin/vanilla /root/scalingin
+
+#use to calc time to do installation (take 6min to go here ?)
+date
