@@ -24,11 +24,12 @@ def scalling(s):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     for (name, ip) in data.items():
         name2 = name.split("-");
-        try:
-            data2[name2[0]][name2[1]] = ip;
-        except:
-            data2[name2[0]] = {};
-            data2[name2[0]][name2[1]] = ip;
+        if (len(name2) == 2 ):
+            try:
+                data2[name2[0]][name2[1]] = ip;
+            except:
+                data2[name2[0]] = {};
+                data2[name2[0]][name2[1]] = ip;
 
     # get the management ip of controller
     ssh.connect('127.0.0.1', username="root")
