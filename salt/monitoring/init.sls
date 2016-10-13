@@ -13,7 +13,11 @@ collectd-core:
     - group: root
     - mode: 666
 
-
+collectd:
+  service.running:
+    - enable: True
+    - watch:
+      - file: /etc/collectd/collectd.conf
 #/var/salt/update_uuid.sh:
 #  file:
 #    - managed
