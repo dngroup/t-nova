@@ -8,3 +8,6 @@ salt-key
 salt-run state.orchestrate orch
 
 salt '*' cmd.run 'docker ps'
+## prepare scaling
+cp worker/vanilla /root/scalingout
+cp workerin/vanilla /root/scalingin
