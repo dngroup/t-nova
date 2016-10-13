@@ -4,4 +4,7 @@ apt-get update
 apt-get install python-paramiko --yes
 ln -s /root/t-nova/salt /srv/salt
 ./init
+salt-key
 salt-run state.orchestrate orch
+
+salt '*' cmd.run 'docker ps'

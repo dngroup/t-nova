@@ -2,7 +2,6 @@ install_all_server: # update the pillar
   salt.state:
     - tgt: '*'
     - highstate: True
-    - reload_pillar: true
 
 
 swift_object:
@@ -22,7 +21,6 @@ updatemine:
       - updatemine
     - require:
       - salt: install_all_server
-    - reload_pillar: true
 
 worker:
   salt.state: # use the updated pillar, but it's still the old one...
@@ -32,4 +30,3 @@ worker:
       - worker
     - require:
       - salt: updatemine
-    - reload_pillar: true

@@ -125,10 +125,7 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
 
-print "start salt (sleep 30s)"
-time.sleep(30)
-# ssh.connect("127.0.0.1", username="root")
-# _do(ssh, 'salt "Frontend" state.highstate')
-# _do(ssh, 'salt "*" state.highstate')
+print "sleep 60s"
+time.sleep(60)
 
-print "Finish complete"
+print "Finish (now start salt)"
