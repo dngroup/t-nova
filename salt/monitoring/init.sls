@@ -18,6 +18,7 @@ collectd:
     - enable: True
     - watch:
       - file: /etc/collectd/collectd.conf
+
 #/var/salt/update_uuid.sh:
 #  file:
 #    - managed

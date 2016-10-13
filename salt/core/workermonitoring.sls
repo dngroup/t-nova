@@ -13,7 +13,7 @@ monitoring-worker-t-nova:
       - "UUID" : "{{ uuid }}"
       - "RABBITMQ" : "{{ pillar['ips']['Frontend']['management'] }}"
       - "QUEUE" : "soft"
-      - "METRICNAME" : "worker"
+      - "METRICNAME" : "transcoding_score"
     - restart_policy: always
     - require:
       - dockerng: dngroup/monitoring-worker-t-nova
