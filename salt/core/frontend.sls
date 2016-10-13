@@ -26,5 +26,6 @@ core-frontend:
       - "STREAMER_URL" : " http://{{ pillar['ips']['Frontend']['Floating'] }}:8080/v1/AUTH_admin/"
       - "SWIFT_URL" : "http://{{ pillar['ips']['Frontend']['data'] }}:8080"
       - "TRANSCOD_PARAM_FILE" : "~/transcodeParam.json"
+    - restart_policy: always
     - require: 
       - dockerng: dngroup/adapted-video-frontend

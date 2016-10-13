@@ -111,9 +111,9 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - vhg" >> /etc/salt/grains')
     elif ("Frontend" in name):
         # _do(ssh, 'echo  "*/2 *    * * *   /usr/local/bin/tnova_send_metric worker $(curl -s http://localhost:5000/api/monitoring/queuesize)" |  crontab ')
+        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - broker" >> /etc/salt/grains')
         _do(ssh, 'echo "  - swift_proxy" >> /etc/salt/grains')
-        _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - frontend" >> /etc/salt/grains')
         _do(ssh, 'echo "  - admission" >> /etc/salt/grains')
     elif ("vCDN" in name):

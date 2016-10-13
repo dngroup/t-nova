@@ -21,5 +21,6 @@ vhg:
     - environment:
       - "FRONTAL_PORT" : "5000"
       - "FRONTAL_HOSTNAME" : "{{ pillar['ips']['Frontend']['management'] }}"
+    - restart_policy: always
     - require: 
       - dockerng: dngroup/adapted-video-osgi-bundle

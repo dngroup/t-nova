@@ -14,5 +14,6 @@ monitoring-worker-t-nova:
       - "RABBITMQ" : "{{ pillar['ips']['Frontend']['management'] }}"
       - "QUEUE" : "soft"
       - "METRICNAME" : "worker"
+    - restart_policy: always
     - require:
       - dockerng: dngroup/monitoring-worker-t-nova

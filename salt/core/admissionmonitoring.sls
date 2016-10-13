@@ -14,5 +14,6 @@ monitoring-admission-t-nova:
       - "RABBITMQ" : "{{ pillar['ips']['Frontend']['management'] }}"
       - "QUEUE" : "celery"
       - "METRICNAME" : "admission"
+    - restart_policy: always
     - require:
       - dockerng: dngroup/monitoring-admission-t-nova

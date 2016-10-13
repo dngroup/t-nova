@@ -23,6 +23,7 @@ core-admission:
       - "QUEUE" : "celery"
 #salt issu https://github.com/saltstack/salt/issues/31595
     - user: user
+    - restart_policy: always
     - require:
       - dockerng: dngroup/vhg-adaptation-admission
 
