@@ -1,6 +1,7 @@
 dngroup/adapted-video-osgi-bundle:
   dockerng.image_present:
     - force: True
+    - name: dngroup/adapted-video-osgi-bundle:t-nova-v1
 
 
 
@@ -16,7 +17,7 @@ dngroup/adapted-video-osgi-bundle:
 
 vhg:
   dockerng.running:
-    - image:  dngroup/adapted-video-osgi-bundle
+    - image:  dngroup/adapted-video-osgi-bundle:t-nova-v1
     - port_bindings: "8080:8080"
     - environment:
       - "FRONTAL_PORT" : "5000"

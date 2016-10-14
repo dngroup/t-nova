@@ -1,7 +1,7 @@
 dngroup/adapted-video-frontend:
   dockerng.image_present:
     - force: True
-    - name: dngroup/adapted-video-frontend
+    - name: dngroup/adapted-video-frontend:t-nova-v1
 
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
@@ -16,7 +16,7 @@ dngroup/adapted-video-frontend:
 
 core-frontend:
   dockerng.running:
-    - image: dngroup/adapted-video-frontend
+    - image: dngroup/adapted-video-frontend:t-nova-v1
     - port_bindings: "5000:8080"
     - volumes:
       - "/root:/root:ro" 

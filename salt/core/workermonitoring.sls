@@ -4,11 +4,11 @@
 dngroup/monitoring-worker-t-nova:
   dockerng.image_present:
     - force: True
-    - name:  dngroup/monitoring-t-nova
+    - name:  dngroup/monitoring-t-nova:t-nova-v1
 
 monitoring-worker-t-nova:
   dockerng.running:
-    - image:  dngroup/monitoring-t-nova
+    - image:  dngroup/monitoring-t-nova:t-nova-v1
     - environment:
       - "UUID" : "{{ uuid }}"
       - "RABBITMQ" : "{{ pillar['ips']['Frontend']['management'] }}"

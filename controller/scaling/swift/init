@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-
+# not use because no scaling for swift
 import json
 import paramiko
 import sys
 import time
 import yaml
 import argparse
-
-from scp import SCPClient
 
 
 def _do(ssh, command):
@@ -25,10 +23,12 @@ def scalling(s):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     for (name, ip) in data.items():
         name2 = name.split("-");
-        if (len(name2) == 2 ):
-            try:
+        # remove the controller public ip format need by tenor
+        if (len(name2) == 2):
+            # change the format for machine -> ip
+            try:  # if already exist  add a new ip to the list of ip of vdu
                 data2[name2[0]][name2[1]] = ip;
-            except:
+            except: # else create a nex list for this vdu
                 data2[name2[0]] = {};
                 data2[name2[0]][name2[1]] = ip;
 
@@ -42,8 +42,6 @@ def scalling(s):
 
     print name, " ", ips, " connect to ", ips["management"]
     ssh.connect(ips["management"], username="root")
-    scp = SCPClient(ssh.get_transport())
-    scp.put("../../tnova_send_metric", "/usr/local/bin/tnova_send_metric")
 
     _do(ssh, 'service salt-minion stop')
     _do(ssh, 'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | apt-key add -')
@@ -72,7 +70,6 @@ def scalling(s):
     time.sleep(30)
     ssh.connect("127.0.0.1", username="root")
     _do(ssh, "salt '%s' state.highstate" % name)
-
 
     _do(ssh, 'salt "Frontend" state.sls storage.scaling')
     print "Finish complete"

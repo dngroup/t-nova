@@ -22,13 +22,14 @@ def scalling(s):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     for (name, ip) in data.items():
         name2 = name.split("-");
-        if (len(name2) == 2 ):
-            try:
+        # remove the controller public ip format need by tenor
+        if (len(name2) == 2):
+            # change the format for machine -> ip
+            try:  # if already exist  add a new ip to the list of ip of vdu
                 data2[name2[0]][name2[1]] = ip;
-            except:
+            except:  # else create a nex list for this vdu
                 data2[name2[0]] = {};
                 data2[name2[0]][name2[1]] = ip;
-
 
     ips_json = {"ips": data2}
     yml = yaml.safe_dump(ips_json, allow_unicode=True)
@@ -45,13 +46,12 @@ def scalling(s):
     uuidtemp = stdout.read()
     hostname = uuidtemp.rstrip('\r\n')
 
-
-
     # get the uuid of the vm and set at name
-    stdin, stdout, stderr = ssh.exec_command("curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*\"uuid\": \"//; s/\".*//'")
+    stdin, stdout, stderr = ssh.exec_command(
+        "curl -s http://169.254.169.254/openstack/latest/meta_data.json | sed -e 's/.*\"uuid\": \"//; s/\".*//'")
     uuidtemp = stdout.read()
-    uuid=uuidtemp.rstrip('\r\n')
-    name = nametemp+"_"+uuid
+    uuid = uuidtemp.rstrip('\r\n')
+    name = nametemp + "_" + uuid
     print name, " ", ips, " connect to ", ips["management"]
 
     # docker node update --availability pause $HOSTNAME
@@ -67,13 +67,15 @@ def scalling(s):
     _do(ssh, 'docker service ps worker')
 
     ssh.connect(ips["management"], username="root")
-    _do(ssh,'docker exec -it --user root $(docker ps -q) /bin/bash -c "kill -15 \$(ps -e | grep bash | head -n 1 | cut -b 4-6 )"')
 
+    ## docker kill -s SIGTERM do not propagate to celery because of bash charging venv
+    # for that we exec inside the container a kill and we get the first bahs (venv) and get only the pid to soft kill it
+    _do(ssh,
+        'docker exec -it --user root $(docker ps -q) /bin/bash -c "kill -15 \$(ps -e | grep bash | head -n 1 | cut -b 4-6 )"')
 
     ssh.connect('127.0.0.1', username="root")
     _do(ssh, 'docker node remove %s' % hostname)
     _do(ssh, 'salt-key -d %s -y' % name)
-
 
     print "Finish complete"
 

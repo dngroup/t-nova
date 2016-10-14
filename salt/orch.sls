@@ -1,4 +1,4 @@
-install_all_server: # update the pillar
+install_all_server: # need to update the pillar after this
   salt.state:
     - tgt: '*'
     - highstate: True
@@ -33,7 +33,7 @@ Frontend:
 
 
 updatemine:
-  salt.state: # update pillar,
+  salt.state: #force update pillar
     - tgt: 'roles:controller'
     - tgt_type: grain
     - sls:
@@ -42,7 +42,7 @@ updatemine:
       - salt: install_all_server
 
 worker:
-  salt.state: # use the updated pillar, but it's still the old one...
+  salt.state: # use the updated pillar
     - tgt: 'roles:worker'
     - tgt_type: grain
     - sls:
