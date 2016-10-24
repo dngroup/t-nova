@@ -17,7 +17,7 @@ def _do(ssh, command):
 with open("data.json") as f:
     data = json.loads(f.read())
 
-data2 = {};
+data2 = {"controller": {}};
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 for (name, ip) in data.items():
@@ -38,12 +38,13 @@ ips_json = {"ips": data2}
 yml = yaml.safe_dump(ips_json, allow_unicode=True)
 print yml
 
-for (name, ips) in data2.items():
+
+def configureSalt():
+    global name2
     print name, " ", ips, " connect to ", ips["management"]
     ssh.connect(ips["management"], username="root")
     # scp = SCPClient(ssh.get_transport())
     # scp.put("tnova_send_metric","/usr/local/bin/tnova_send_metric")
-
     _do(ssh, 'service salt-minion stop')
     _do(ssh,
         'wget -O - https://repo.saltstack.com/apt/debian/8/amd64/archive/2016.3.2/SALTSTACK-GPG-KEY.pub | sudo apt-key add -')
@@ -58,9 +59,7 @@ for (name, ips) in data2.items():
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hostname" % name)
     _do(ssh, "sed -i -e 's/VHG/%s/g' /etc/hosts" % name)
     _do(ssh, '/etc/init.d/hostname.sh start')
-
     # _do(ssh, 'chmod +x /usr/local/bin/tnova_send_metric')
-
     # for everbody
     _do(ssh, "echo %s salt >> /etc/hosts" % masterIp)
     for (name2, ips2) in data2.items():
@@ -119,8 +118,18 @@ for (name, ips) in data2.items():
         _do(ssh, 'echo "  - core" >> /etc/salt/grains')
         _do(ssh, 'echo "  - worker" >> /etc/salt/grains')
     _do(ssh, "service salt-minion restart")
+    # force to register on master
+    _do(ssh, "salt-call cmd.run 'date'")
+
+# force start with controller
+name = "controller"
+ips = data2["controller"]
+configureSalt()
+# do for the other
+for (name, ips) in data2.items():
+    if ("controller" not in name):
+        configureSalt()
 
 print "sleep 60s"
-time.sleep(60)
-
+# time.sleep(60)
 print "Finish (now start salt)"
