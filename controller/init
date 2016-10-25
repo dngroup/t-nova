@@ -130,6 +130,6 @@ for (name, ips) in data2.items():
     if ("controller" not in name):
         configureSalt()
 
-print "sleep 60s"
-# time.sleep(60)
+print "sleep 10s"
+time.sleep(10)
 print "Finish (now start salt)"
