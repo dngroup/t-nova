@@ -3,6 +3,12 @@ dngroup/adapted-video-frontend:
     - force: True
     - name: dngroup/adapted-video-frontend:t-nova-v1
 
+dngroup/adapted-video-frontend-backup:
+  dockerng.image_present:
+    - force: True
+    - name: dngroup/adapted-video-frontend:t-nova-v1
+    - onfail:
+      - dockerng: dngroup/adapted-video-frontend
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
 {%- set addrs = salt['mine.get']('roles:broker', minealias,"grain") %}

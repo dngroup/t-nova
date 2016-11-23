@@ -3,6 +3,13 @@ dngroup/vhg-adaptation-worker:
     - force: True
     - name: dngroup/vhg-adaptation-worker:t-nova-v1
 
+dngroup/vhg-adaptation-worker-backup:
+  dockerng.image_present:
+    - force: True
+    - name: dngroup/vhg-adaptation-worker:t-nova-v1
+    - onfail:
+      - dockerng: dngroup/vhg-adaptation-worker
+
 
 {%- set minealias = salt['pillar.get']('hostsfile:alias', 'network.ip_addrs') %}
 {%- set addrs = salt['mine.get']('roles:broker', minealias,"grain") %}

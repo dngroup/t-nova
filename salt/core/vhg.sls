@@ -4,6 +4,12 @@ dngroup/adapted-video-osgi-bundle:
     - name: dngroup/adapted-video-osgi-bundle:t-nova-v1
 
 
+dngroup/adapted-video-osgi-bundle-backup:
+  dockerng.image_present:
+    - force: True
+    - name: dngroup/adapted-video-osgi-bundle:t-nova-v1
+    - onfail:
+      - dockerng: dngroup/adapted-video-osgi-bundle
 
 
 

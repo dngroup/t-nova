@@ -2,6 +2,11 @@ rabbitmq:3.5.4-management:
   dockerng.image_present:
     - force: True
 
+rabbitmq:3.5.4-management-backup:
+  dockerng.image_present:
+    - force: True
+    - onfail:
+      - dockerng: rabbitmq:3.5.4-management
 
 core-broker:
   dockerng.running:
