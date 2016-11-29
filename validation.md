@@ -21,8 +21,13 @@ after launch all vnfd
 ## Caching 
 
  - action: 
-    - wait about 5 min 
+    - wait about 1 min 
     - reload `http://clips.vorwaerts-gmbh.de/VfE_html5.mp4`
  - result:
     - URL should by change to 10.10.1.X
  
+## Scaling
+
+ - use the script usergetvideo.sh
+    - `usergetvideo.sh $NBVIDEOPERMIN $PUBLICIP_VHG:8080`
+    - `usergetvideo.sh 18 10.10.1.213:8080`
